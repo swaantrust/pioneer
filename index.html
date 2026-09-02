@@ -1,2837 +1,800 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PioneerTrust - Banking</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <style>
-        /* ============================================================
-                   RESET & BASE
-                   ============================================================ */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #0a1e3d;
-            --primary-light: #14325c;
-            --gold: #d4a853;
-            --gold-light: #e8c97a;
-            --gold-dark: #b8923f;
-            --bg: #f0f4fc;
-            --card: #ffffff;
-            --text: #0a1e3d;
-            --text-secondary: #4a5b7a;
-            --text-muted: #7a8aa8;
-            --border: #e2e8f0;
-            --shadow: 0 8px 32px rgba(10, 30, 61, 0.08);
-            --shadow-hover: 0 12px 48px rgba(10, 30, 61, 0.15);
-            --radius: 16px;
-            --radius-sm: 10px;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --info: #3b82f6;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --nav-height: 70px;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-        button {
-            cursor: pointer;
-            border: none;
-            outline: none;
-            font-family: inherit;
-        }
-        input,
-        select,
-        textarea {
-            font-family: inherit;
-            outline: none;
-            border: none;
-        }
-
-        /* ============================================================
-                   UTILITY
-                   ============================================================ */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            width: 100%;
-        }
-
-        .flex {
-            display: flex;
-            align-items: center;
-        }
-        .flex-between {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .flex-center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .flex-col {
-            display: flex;
-            flex-direction: column;
-        }
-        .gap-1 {
-            gap: 8px;
-        }
-        .gap-2 {
-            gap: 16px;
-        }
-        .gap-3 {
-            gap: 24px;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-        .text-gold {
-            color: var(--gold);
-        }
-        .text-muted {
-            color: var(--text-muted);
-        }
-        .text-sm {
-            font-size: 0.875rem;
-        }
-        .text-xs {
-            font-size: 0.75rem;
-        }
-        .text-lg {
-            font-size: 1.125rem;
-        }
-        .text-xl {
-            font-size: 1.25rem;
-        }
-        .text-2xl {
-            font-size: 1.5rem;
-        }
-        .text-3xl {
-            font-size: 2rem;
-        }
-        .font-bold {
-            font-weight: 700;
-        }
-        .font-semibold {
-            font-weight: 600;
-        }
-        .font-medium {
-            font-weight: 500;
-        }
-        .mt-1 {
-            margin-top: 8px;
-        }
-        .mt-2 {
-            margin-top: 16px;
-        }
-        .mt-3 {
-            margin-top: 24px;
-        }
-        .mt-4 {
-            margin-top: 32px;
-        }
-        .mb-1 {
-            margin-bottom: 8px;
-        }
-        .mb-2 {
-            margin-bottom: 16px;
-        }
-        .mb-3 {
-            margin-bottom: 24px;
-        }
-        .mb-4 {
-            margin-bottom: 32px;
-        }
-        .w-full {
-            width: 100%;
-        }
-
-        /* ============================================================
-                   BUTTONS
-                   ============================================================ */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 28px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: var(--transition);
-            border: 2px solid transparent;
-            min-height: 50px;
-            min-width: 120px;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: #fff;
-            border-color: var(--primary);
-        }
-        .btn-primary:hover {
-            background: var(--primary-light);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(10, 30, 61, 0.25);
-        }
-
-        .btn-gold {
-            background: var(--gold);
-            color: var(--primary);
-            border-color: var(--gold);
-        }
-        .btn-gold:hover {
-            background: var(--gold-light);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(212, 168, 83, 0.35);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--primary);
-            border-color: var(--primary);
-        }
-        .btn-outline:hover {
-            background: var(--primary);
-            color: #fff;
-            transform: translateY(-2px);
-        }
-
-        .btn-outline-light {
-            background: transparent;
-            color: #fff;
-            border-color: rgba(255, 255, 255, 0.4);
-        }
-        .btn-outline-light:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .btn-success {
-            background: var(--success);
-            color: #fff;
-            border-color: var(--success);
-        }
-        .btn-success:hover {
-            background: #059669;
-            transform: translateY(-2px);
-        }
-
-        .btn-danger {
-            background: var(--danger);
-            color: #fff;
-            border-color: var(--danger);
-        }
-        .btn-danger:hover {
-            background: #dc2626;
-            transform: translateY(-2px);
-        }
-
-        .btn-info {
-            background: var(--info);
-            color: #fff;
-            border-color: var(--info);
-        }
-        .btn-info:hover {
-            background: #2563eb;
-            transform: translateY(-2px);
-        }
-
-        .btn-sm {
-            padding: 8px 16px;
-            min-height: 38px;
-            min-width: 80px;
-            font-size: 0.8rem;
-        }
-
-        .btn-block {
-            width: 100%;
-            justify-content: center;
-        }
-
-        /* ============================================================
-                   CARDS
-                   ============================================================ */
-        .card {
-            background: var(--card);
-            border-radius: var(--radius);
-            padding: 24px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            transition: var(--transition);
-        }
-        .card:hover {
-            box-shadow: var(--shadow-hover);
-        }
-
-        /* ============================================================
-                   FORMS
-                   ============================================================ */
-        .form-group {
-            margin-bottom: 18px;
-        }
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 6px;
-            color: var(--text-secondary);
-        }
-        .form-group label .required {
-            color: var(--danger);
-            margin-left: 2px;
-        }
-        .form-control {
-            width: 100%;
-            padding: 14px 18px;
-            border-radius: var(--radius-sm);
-            border: 2px solid var(--border);
-            background: var(--bg);
-            font-size: 1rem;
-            transition: var(--transition);
-            color: var(--text);
-        }
-        .form-control:focus {
-            border-color: var(--gold);
-            background: #fff;
-            box-shadow: 0 0 0 4px rgba(212, 168, 83, 0.12);
-        }
-        .form-control.error {
-            border-color: var(--danger);
-        }
-        textarea.form-control {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        select.form-control {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a5b7a' stroke-width='2' fill='none'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-        }
-
-        /* ============================================================
-                   TOAST
-                   ============================================================ */
-        .toast-container {
-            position: fixed;
-            top: 90px;
-            right: 24px;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-width: 400px;
-            width: 100%;
-        }
-
-        .toast {
-            background: var(--card);
-            padding: 14px 20px;
-            border-radius: var(--radius-sm);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-            border-left: 4px solid var(--info);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            animation: slideIn 0.35s ease;
-        }
-        .toast.success {
-            border-left-color: var(--success);
-        }
-        .toast.error {
-            border-left-color: var(--danger);
-        }
-        .toast.warning {
-            border-left-color: var(--warning);
-        }
-        .toast .icon {
-            font-size: 1.3rem;
-        }
-        .toast .content {
-            flex: 1;
-        }
-        .toast .title {
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        .toast .message {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-        .toast .close-btn {
-            background: none;
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            padding: 4px;
-            transition: var(--transition);
-        }
-        .toast .close-btn:hover {
-            color: var(--text);
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(60px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        @keyframes slideOut {
-            from {
-                opacity: 1;
-                transform: translateX(0);
-            }
-            to {
-                opacity: 0;
-                transform: translateX(60px);
-            }
-        }
-
-        /* ============================================================
-                   NAVBAR
-                   ============================================================ */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
-            height: var(--nav-height);
-            transition: var(--transition);
-        }
-        .navbar.scrolled {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-        }
-        .navbar .container {
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 800;
-            font-size: 1.4rem;
-            color: var(--primary);
-            cursor: pointer;
-        }
-        .nav-brand .gold {
-            color: var(--gold);
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            list-style: none;
-        }
-        .nav-links a {
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: var(--transition);
-            color: var(--text-secondary);
-        }
-        .nav-links a:hover {
-            background: var(--bg);
-            color: var(--text);
-        }
-        .nav-links a.active {
-            background: var(--primary);
-            color: #fff;
-        }
-        .nav-links a.btn-nav {
-            background: var(--gold);
-            color: var(--primary);
-            padding: 8px 20px;
-        }
-        .nav-links a.btn-nav:hover {
-            background: var(--gold-light);
-            transform: scale(1.04);
-        }
-
-        .nav-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            background: none;
-            padding: 8px;
-            cursor: pointer;
-        }
-        .nav-toggle span {
-            display: block;
-            width: 28px;
-            height: 3px;
-            background: var(--primary);
-            border-radius: 3px;
-            transition: var(--transition);
-        }
-        .nav-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-        .nav-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-        .nav-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
-        }
-
-        /* ============================================================
-                   PAGE SYSTEM - COMPLETELY SEPARATE
-                   ============================================================ */
-        .page-wrapper {
-            display: none;
-            width: 100%;
-            min-height: 100vh;
-            position: relative;
-        }
-        .page-wrapper.active {
-            display: block;
-        }
-
-        /* ============================================================
-                   LANDING PAGE
-                   ============================================================ */
-        .page-landing {
-            padding-top: var(--nav-height);
-            background: var(--bg);
-        }
-
-        .hero {
-            background: linear-gradient(160deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: #fff;
-            padding: 60px 0 80px;
-            position: relative;
-            overflow: hidden;
-            min-height: calc(100vh - var(--nav-height));
-            display: flex;
-            align-items: center;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -40%;
-            right: -10%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(212, 168, 83, 0.10) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-        .hero .container {
-            position: relative;
-            z-index: 1;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-        .hero-content h1 {
-            font-size: clamp(2.4rem, 4.5vw, 3.8rem);
-            font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: 16px;
-        }
-        .hero-content h1 .highlight {
-            color: var(--gold);
-        }
-        .hero-content p {
-            font-size: 1.05rem;
-            opacity: 0.85;
-            max-width: 480px;
-            margin-bottom: 28px;
-            line-height: 1.8;
-        }
-        .hero-buttons {
-            display: flex;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
-        .hero-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-top: 40px;
-            padding-top: 32px;
-            border-top: 1px solid rgba(255, 255, 255, 0.10);
-        }
-        .hero-stats .stat h3 {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--gold);
-        }
-        .hero-stats .stat p {
-            font-size: 0.85rem;
-            opacity: 0.7;
-            margin: 0;
-        }
-
-        .hero-mockup {
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 32px;
-            padding: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.10);
-            backdrop-filter: blur(8px);
-            max-width: 320px;
-            width: 100%;
-            margin: 0 auto;
-        }
-        .hero-mockup .mockup-screen {
-            background: #fff;
-            border-radius: 20px;
-            padding: 18px 16px;
-            color: var(--text);
-            min-height: 380px;
-        }
-        .mockup-balance {
-            background: var(--primary);
-            color: #fff;
-            border-radius: 14px;
-            padding: 16px;
-            margin-bottom: 14px;
-        }
-        .mockup-balance .amount {
-            font-size: 1.6rem;
-            font-weight: 800;
-        }
-        .mockup-actions {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin: 12px 0;
-        }
-        .mockup-actions .action {
-            background: var(--bg);
-            border-radius: 10px;
-            padding: 10px 4px;
-            text-align: center;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-        .mockup-actions .action span {
-            display: block;
-            font-size: 1.3rem;
-        }
-
-        /* Features Section */
-        .features-section {
-            padding: 80px 0;
-            background: #fff;
-        }
-        .features-section .section-header {
-            text-align: center;
-            max-width: 650px;
-            margin: 0 auto 48px;
-        }
-        .features-section .section-header h2 {
-            font-size: clamp(2rem, 3vw, 2.6rem);
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-        .features-section .section-header p {
-            color: var(--text-secondary);
-            font-size: 1.05rem;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 24px;
-        }
-        .feature-card {
-            background: var(--bg);
-            border-radius: var(--radius);
-            padding: 28px 20px;
-            text-align: center;
-            border: 1px solid var(--border);
-            transition: var(--transition);
-        }
-        .feature-card:hover {
-            transform: translateY(-6px);
-            border-color: var(--gold);
-            box-shadow: var(--shadow-hover);
-        }
-        .feature-card .icon {
-            width: 64px;
-            height: 64px;
-            background: rgba(212, 168, 83, 0.12);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            color: var(--gold);
-            margin: 0 auto 14px;
-        }
-        .feature-card h3 {
-            font-size: 1.05rem;
-            margin-bottom: 6px;
-        }
-        .feature-card p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--primary);
-            color: rgba(255, 255, 255, 0.7);
-            padding: 40px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        .footer .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-        .footer .brand {
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: #fff;
-        }
-        .footer .brand .gold {
-            color: var(--gold);
-        }
-        .footer-links {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .footer-links a {
-            font-size: 0.85rem;
-            transition: var(--transition);
-        }
-        .footer-links a:hover {
-            color: #fff;
-        }
-
-        /* ============================================================
-                   AUTH PAGES (Login / Register) - COMPLETELY SEPARATE
-                   ============================================================ */
-        .auth-wrapper {
-            min-height: 100vh;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
-            background: linear-gradient(160deg, var(--primary) 0%, var(--primary-light) 100%);
-            position: relative;
-        }
-        .auth-wrapper.active {
-            display: flex;
-        }
-        .auth-wrapper::before {
-            content: '';
-            position: absolute;
-            top: -20%;
-            right: -10%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(212, 168, 83, 0.12) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .auth-card {
-            background: #fff;
-            border-radius: var(--radius);
-            padding: 40px 36px;
-            max-width: 420px;
-            width: 100%;
-            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.2);
-            position: relative;
-            z-index: 1;
-        }
-        .auth-card .auth-brand {
-            text-align: center;
-            margin-bottom: 28px;
-        }
-        .auth-card .auth-brand h2 {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--primary);
-        }
-        .auth-card .auth-brand h2 .gold {
-            color: var(--gold);
-        }
-        .auth-card .auth-brand p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-top: 2px;
-        }
-        .auth-divider {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin: 18px 0;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-        .auth-divider::before,
-        .auth-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border);
-        }
-        .auth-footer {
-            text-align: center;
-            margin-top: 18px;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-        .auth-footer a {
-            color: var(--gold);
-            font-weight: 600;
-            cursor: pointer;
-        }
-        .auth-footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* ============================================================
-                   DASHBOARD PAGE - COMPLETELY SEPARATE
-                   ============================================================ */
-        .dashboard-wrapper {
-            padding-top: calc(var(--nav-height) + 24px);
-            padding-bottom: 40px;
-            min-height: 100vh;
-            display: none;
-            background: var(--bg);
-        }
-        .dashboard-wrapper.active {
-            display: block;
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 260px 1fr;
-            gap: 28px;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            background: var(--card);
-            border-radius: var(--radius);
-            padding: 24px 16px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            height: fit-content;
-            position: sticky;
-            top: calc(var(--nav-height) + 24px);
-        }
-        .sidebar-user {
-            text-align: center;
-            padding-bottom: 18px;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 18px;
-        }
-        .sidebar-user .avatar {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: var(--gold);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin: 0 auto 10px;
-        }
-        .sidebar-user h4 {
-            font-size: 1rem;
-        }
-        .sidebar-user p {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .sidebar-nav a {
-            padding: 10px 14px;
-            border-radius: var(--radius-sm);
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            cursor: pointer;
-        }
-        .sidebar-nav a:hover {
-            background: var(--bg);
-            color: var(--text);
-        }
-        .sidebar-nav a.active {
-            background: var(--primary);
-            color: #fff;
-        }
-        .sidebar-nav a i {
-            width: 20px;
-            text-align: center;
-        }
-        .sidebar-nav .logout-item {
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid var(--border);
-            color: var(--danger);
-        }
-        .sidebar-nav .logout-item:hover {
-            background: #fef2f2;
-            color: var(--danger);
-        }
-
-        /* Dashboard Main */
-        .dashboard-main {
-            display: flex;
-            flex-direction: column;
-            gap: 22px;
-        }
-
-        .welcome-banner {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: #fff;
-            border-radius: var(--radius);
-            padding: 24px 28px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 14px;
-        }
-        .welcome-banner h2 {
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-        .welcome-banner p {
-            opacity: 0.8;
-            font-size: 0.95rem;
-        }
-        .welcome-banner .badge {
-            background: rgba(255, 255, 255, 0.12);
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-        }
-
-        /* Balance Cards */
-        .balance-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-        }
-        .balance-card {
-            background: var(--card);
-            border-radius: var(--radius);
-            padding: 18px 20px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-        }
-        .balance-card .label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-        .balance-card .amount {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin: 2px 0;
-        }
-        .balance-card .change {
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-        .balance-card .change.positive {
-            color: var(--success);
-        }
-        .balance-card .change.negative {
-            color: var(--danger);
-        }
-        .balance-card.gold {
-            background: linear-gradient(135deg, var(--gold), var(--gold-light));
-            border-color: var(--gold);
-        }
-        .balance-card.gold .amount {
-            color: var(--primary);
-        }
-        .balance-card.gold .label {
-            color: rgba(10, 30, 61, 0.7);
-        }
-
-        /* Quick Actions */
-        .quick-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-            gap: 10px;
-        }
-        .quick-btn {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 14px 10px;
-            text-align: center;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-        .quick-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--gold);
-        }
-        .quick-btn span {
-            font-size: 1.4rem;
-            display: block;
-        }
-        .quick-btn .label {
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-top: 4px;
-        }
-
-        /* ============================================================
-                   INVESTMENT SECTION
-                   ============================================================ */
-        .investment-section {
-            background: var(--card);
-            border-radius: var(--radius);
-            padding: 24px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-        }
-        .investment-section .section-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .investment-section .section-title i {
-            color: var(--gold);
-        }
-
-        .investment-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-        }
-        .investment-card {
-            background: var(--bg);
-            border-radius: var(--radius-sm);
-            padding: 18px 16px;
-            border: 1px solid var(--border);
-            transition: var(--transition);
-            cursor: pointer;
-        }
-        .investment-card:hover {
-            border-color: var(--gold);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
-        }
-        .investment-card .plan-name {
-            font-weight: 700;
-            font-size: 1rem;
-        }
-        .investment-card .plan-return {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--success);
-            margin: 4px 0;
-        }
-        .investment-card .plan-details {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-        .investment-card .plan-status {
-            display: inline-block;
-            padding: 2px 12px;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            margin-top: 8px;
-        }
-        .plan-status.active {
-            background: #d1fae5;
-            color: #065f46;
-        }
-        .plan-status.pending {
-            background: #fef3c7;
-            color: #92400e;
-        }
-        .plan-status.completed {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-
-        .invest-summary {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 12px;
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px solid var(--border);
-        }
-        .invest-summary .summary-item .label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-        .invest-summary .summary-item .value {
-            font-size: 1.1rem;
-            font-weight: 700;
-        }
-
-        /* ============================================================
-                   GRANTS SECTION
-                   ============================================================ */
-        .grants-section {
-            background: var(--card);
-            border-radius: var(--radius);
-            padding: 24px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-        }
-        .grants-section .section-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .grants-section .section-title i {
-            color: var(--gold);
-        }
-
-        .grants-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 16px;
-        }
-        .grant-card {
-            background: var(--bg);
-            border-radius: var(--radius-sm);
-            padding: 18px 16px;
-            border: 1px solid var(--border);
-            transition: var(--transition);
-        }
-        .grant-card:hover {
-            border-color: var(--gold);
-            box-shadow: var(--shadow-hover);
-        }
-        .grant-card .grant-name {
-            font-weight: 700;
-            font-size: 1rem;
-        }
-        .grant-card .grant-amount {
-            font-size: 1.1rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin: 4px 0;
-        }
-        .grant-card .grant-desc {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-        .grant-card .grant-status {
-            display: inline-block;
-            padding: 2px 12px;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            margin-top: 8px;
-        }
-        .grant-status.approved {
-            background: #d1fae5;
-            color: #065f46;
-        }
-        .grant-status.pending {
-            background: #fef3c7;
-            color: #92400e;
-        }
-        .grant-status.rejected {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-        .grant-status.review {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-
-        /* ============================================================
-                   TRANSACTIONS
-                   ============================================================ */
-        .tx-container {
-            background: var(--card);
-            border-radius: var(--radius);
-            padding: 20px 24px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-        }
-        .tx-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-        .tx-header h3 {
-            font-size: 1.1rem;
-        }
-        .tx-filters {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-        .tx-filters button {
-            padding: 4px 14px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            background: var(--bg);
-            color: var(--text-secondary);
-            transition: var(--transition);
-            border: 1px solid transparent;
-        }
-        .tx-filters button:hover {
-            background: var(--border);
-        }
-        .tx-filters button.active {
-            background: var(--primary);
-            color: #fff;
-        }
-
-        .tx-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border);
-            gap: 14px;
-        }
-        .tx-item:last-child {
-            border-bottom: none;
-        }
-        .tx-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            flex-shrink: 0;
-        }
-        .tx-info {
-            flex: 1;
-            min-width: 0;
-        }
-        .tx-info .name {
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        .tx-info .desc {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .tx-amount {
-            font-weight: 700;
-            font-size: 0.9rem;
-            flex-shrink: 0;
-            text-align: right;
-        }
-        .tx-amount.positive {
-            color: var(--success);
-        }
-        .tx-amount.negative {
-            color: var(--danger);
-        }
-        .tx-status {
-            font-size: 0.65rem;
-            padding: 2px 10px;
-            border-radius: 50px;
-            font-weight: 600;
-            flex-shrink: 0;
-        }
-        .tx-status.completed {
-            background: #d1fae5;
-            color: #065f46;
-        }
-        .tx-status.pending {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        /* ============================================================
-                   MODALS
-                   ============================================================ */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            z-index: 5000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .modal-overlay.open {
-            display: flex;
-        }
-        .modal {
-            background: var(--card);
-            border-radius: var(--radius);
-            max-width: 500px;
-            width: 100%;
-            padding: 28px 30px;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: modalIn 0.3s ease;
-            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.25);
-        }
-        @keyframes modalIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95) translateY(16px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .modal-header h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-        .modal-close {
-            background: var(--bg);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            transition: var(--transition);
-            color: var(--text-secondary);
-        }
-        .modal-close:hover {
-            background: var(--border);
-        }
-
-        /* ============================================================
-                   RESPONSIVE
-                   ============================================================ */
-        @media (max-width: 1024px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-            .sidebar {
-                position: static;
-                display: grid;
-                grid-template-columns: auto 1fr;
-                align-items: center;
-                gap: 20px;
-                padding: 14px 20px;
-            }
-            .sidebar-user {
-                border-bottom: none;
-                padding-bottom: 0;
-                margin-bottom: 0;
-                display: flex;
-                align-items: center;
-                gap: 14px;
-                text-align: left;
-            }
-            .sidebar-user .avatar {
-                margin: 0;
-                width: 44px;
-                height: 44px;
-                font-size: 1.2rem;
-            }
-            .sidebar-nav {
-                flex-direction: row;
-                flex-wrap: wrap;
-                gap: 4px;
-            }
-            .sidebar-nav a {
-                padding: 6px 12px;
-                font-size: 0.8rem;
-            }
-            .sidebar-nav .logout-item {
-                border-top: none;
-                padding-top: 0;
-                margin-top: 0;
-            }
-        }
-
-        @media (max-width: 768px) {
-            :root {
-                --nav-height: 62px;
-                --radius: 12px;
-            }
-
-            .hero .container {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .hero-content p {
-                margin: 0 auto 20px;
-            }
-            .hero-buttons {
-                justify-content: center;
-            }
-            .hero-stats {
-                justify-items: center;
-            }
-            .hero-mockup {
-                max-width: 260px;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: var(--nav-height);
-                left: 0;
-                right: 0;
-                background: rgba(255, 255, 255, 0.98);
-                backdrop-filter: blur(16px);
-                flex-direction: column;
-                padding: 16px 20px;
-                gap: 4px;
-                border-bottom: 1px solid var(--border);
-                transform: translateY(-120%);
-                transition: var(--transition);
-                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
-            }
-            .nav-links.open {
-                transform: translateY(0);
-            }
-            .nav-links a {
-                width: 100%;
-                text-align: center;
-                padding: 10px;
-            }
-            .nav-toggle {
-                display: flex;
-            }
-
-            .auth-card {
-                padding: 28px 20px;
-            }
-
-            .welcome-banner {
-                flex-direction: column;
-                text-align: center;
-                padding: 18px 20px;
-            }
-            .balance-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .quick-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-
-            .tx-header {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .tx-filters {
-                justify-content: center;
-            }
-            .tx-item {
-                flex-wrap: wrap;
-            }
-            .tx-status {
-                margin-left: auto;
-            }
-
-            .modal {
-                padding: 20px 18px;
-            }
-
-            .sidebar {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-            .sidebar-user {
-                flex-direction: column;
-                text-align: center;
-            }
-            .sidebar-nav {
-                justify-content: center;
-            }
-
-            .footer .container {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .investment-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .grants-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .balance-grid {
-                grid-template-columns: 1fr;
-            }
-            .quick-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .hero-stats {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            .hero-content h1 {
-                font-size: 2rem;
-            }
-            .investment-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* ============================================================
-                   SCROLLBAR
-                   ============================================================ */
-        ::-webkit-scrollbar {
-            width: 5px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--gold);
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--gold-dark);
-        }
-
-        /* ============================================================
-                   PAGE TRANSITION
-                   ============================================================ */
-        .page-wrapper.active,
-        .auth-wrapper.active,
-        .dashboard-wrapper.active {
-            animation: fadePage 0.4s ease;
-        }
-
-        @keyframes fadePage {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PioneerTrust · Digital Banking</title>
+  <!-- Tailwind + Font Awesome + Chart.js -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <!-- EmailJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/emailjs/3.2.0/email.min.js"></script>
+  <style>
+    .glass { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    .bg-primary { background-color: #0F4CDB; }
+    .text-primary { color: #0F4CDB; }
+    .border-primary { border-color: #0F4CDB; }
+    .bg-accent { background-color: #E63946; }
+    .text-accent { color: #E63946; }
+    .hover\:bg-primary-dark:hover { background-color: #0a3aad; }
+    .shadow-soft { box-shadow: 0 8px 24px rgba(15,76,219,0.10); }
+    .transition-smooth { transition: all 0.25s ease-in-out; }
+    .sidebar-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 1rem; border-radius: 0.75rem; color: #4a5568; transition: all 0.2s; }
+    .sidebar-link:hover { background-color: rgba(15,76,219,0.08); color: #0F4CDB; }
+    .sidebar-link.active { background-color: rgba(15,76,219,0.12); color: #0F4CDB; font-weight: 500; }
+    .card-hover { transition: transform 0.2s, box-shadow 0.2s; }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 16px 32px -8px rgba(15,76,219,0.15); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .nav-link { position: relative; padding: 0.5rem 0; color: #4a5568; font-weight: 500; transition: color 0.2s; }
+    .nav-link:hover { color: #0F4CDB; }
+    .nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: #0F4CDB; transition: width 0.3s; }
+    .nav-link:hover::after { width: 100%; }
+    .btn-primary { background: #0F4CDB; color: white; padding: 0.5rem 1.5rem; border-radius: 9999px; font-weight: 500; transition: all 0.2s; }
+    .btn-primary:hover { background: #0a3aad; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(15,76,219,0.3); }
+    .btn-outline { border: 2px solid #0F4CDB; color: #0F4CDB; padding: 0.5rem 1.5rem; border-radius: 9999px; font-weight: 500; transition: all 0.2s; }
+    .btn-outline:hover { background: #0F4CDB; color: white; }
+    .modal {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      backdrop-filter: blur(4px);
+    }
+    .modal-content {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      max-width: 420px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      animation: fadeUp 0.3s ease;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 99999;
+      background: #1e293b;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 12px;
+      border-left: 4px solid #0F4CDB;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      font-size: 0.9rem;
+      max-width: 380px;
+      animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(40px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    .strength-bar { height: 4px; border-radius: 4px; transition: width 0.3s; }
+  </style>
 </head>
-<body>
+<body class="bg-gray-50 font-sans antialiased">
 
-    <!-- ============================================================
-    TOAST CONTAINER
-    ============================================================ -->
-    <div class="toast-container" id="toastContainer"></div>
-
-    <!-- ============================================================
-    NAVBAR
-    ============================================================ -->
-    <nav class="navbar" id="navbar">
-        <div class="container">
-            <div class="nav-brand" onclick="navigateTo('landing')">
-                🏦 Pioneer<span class="gold">Trust</span>
-            </div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#" onclick="navigateTo('landing')" class="active" id="navHome">Home</a></li>
-                <li><a href="#" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">Features</a></li>
-                <li><a href="#" onclick="navigateTo('login')" id="navLogin">Log In</a></li>
-                <li><a href="#" onclick="navigateTo('register')" class="btn-nav" id="navRegister">Get Started</a></li>
-                <li id="navDashboardLink" style="display:none;"><a href="#" onclick="navigateTo('dashboard')">Dashboard</a></li>
-            </ul>
-            <button class="nav-toggle" id="navToggle" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
+  <!-- ===== LANDING PAGE ===== -->
+  <div id="landingPage" class="min-h-screen flex flex-col">
+    <nav class="sticky top-0 z-50 glass border-b border-gray-200/50 px-6 md:px-12 py-3">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+            <i class="fas fa-landmark text-white text-xl"></i>
+          </div>
+          <span class="text-2xl font-bold text-primary">Pioneer<span class="text-accent">Trust</span></span>
         </div>
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#" class="nav-link">Personal</a>
+          <a href="#" class="nav-link">Business</a>
+          <a href="#" class="nav-link">Investments</a>
+          <a href="#" class="nav-link">About</a>
+          <a href="#" class="nav-link">Help</a>
+        </div>
+        <div class="hidden md:flex items-center gap-3">
+          <button onclick="showLogin()" class="btn-outline text-sm">
+            <i class="fas fa-sign-in-alt mr-2"></i>Login
+          </button>
+          <button onclick="showRegister()" class="btn-primary text-sm">
+            <i class="fas fa-user-plus mr-2"></i>Open Account
+          </button>
+        </div>
+        <button id="mobileMenuToggle" class="md:hidden text-2xl text-gray-600 hover:text-primary transition-smooth">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+      <div id="mobileMenu" class="hidden md:hidden mt-4 pb-2 border-t border-gray-200/50 pt-4">
+        <div class="flex flex-col gap-3">
+          <a href="#" class="nav-link block">Personal</a>
+          <a href="#" class="nav-link block">Business</a>
+          <a href="#" class="nav-link block">Investments</a>
+          <a href="#" class="nav-link block">About</a>
+          <a href="#" class="nav-link block">Help</a>
+          <div class="flex flex-col gap-2 mt-2 pt-2 border-t border-gray-200/50">
+            <button onclick="showLogin()" class="btn-outline text-sm w-full text-center">Login</button>
+            <button onclick="showRegister()" class="btn-primary text-sm w-full text-center">Open Account</button>
+          </div>
+        </div>
+      </div>
     </nav>
 
-    <!-- ============================================================
-    PAGE: LANDING
-    ============================================================ -->
-    <div class="page-wrapper page-landing active" id="pageLanding">
-        <section class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <h1>Banking That <span class="highlight">Moves</span> With You</h1>
-                    <p>PioneerTrust delivers secure, intelligent banking for the modern world. Send money, track spending, invest wisely, and access grants — all from one powerful platform.</p>
-                    <div class="hero-buttons">
-                        <button class="btn btn-gold" onclick="navigateTo('register')">
-                            <i class="fas fa-user-plus"></i> Open Account
-                        </button>
-                        <button class="btn btn-outline-light" onclick="navigateTo('login')">
-                            <i class="fas fa-sign-in-alt"></i> Log In
-                        </button>
-                    </div>
-                    <div class="hero-stats">
-                        <div class="stat"><h3>50K+</h3><p>Active Users</p></div>
-                        <div class="stat"><h3>$2.4B</h3><p>Processed</p></div>
-                        <div class="stat"><h3>99.9%</h3><p>Uptime</p></div>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <div class="hero-mockup">
-                        <div class="mockup-screen">
-                            <div class="mockup-balance">
-                                <div style="font-size:0.75rem;opacity:0.8;">Total Balance</div>
-                                <div class="amount">$12,845.60</div>
-                                <div style="font-size:0.7rem;opacity:0.6;">•••• 4829</div>
-                            </div>
-                            <div class="mockup-actions">
-                                <div class="action"><span>💸</span> Send</div>
-                                <div class="action"><span>📥</span> Receive</div>
-                                <div class="action"><span>📈</span> Invest</div>
-                                <div class="action"><span>🎯</span> Grants</div>
-                            </div>
-                            <div style="font-size:0.7rem;font-weight:600;color:var(--text-muted);margin-top:10px;">
-                                <i class="fas fa-clock"></i> Last: $120.00 to Coffee Shop
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="features-section" id="features">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Built for <span class="text-gold">You</span></h2>
-                    <p>Everything you need to manage your finances, all in one place.</p>
-                </div>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="icon"><i class="fas fa-shield-alt"></i></div>
-                        <h3>Bank-Grade Security</h3>
-                        <p>256-bit encryption and real-time fraud monitoring keep your money safe.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="icon"><i class="fas fa-bolt"></i></div>
-                        <h3>Instant Transfers</h3>
-                        <p>Send and receive money in seconds with zero fees.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="icon"><i class="fas fa-chart-line"></i></div>
-                        <h3>Smart Investments</h3>
-                        <p>Grow your wealth with curated investment plans and real-time returns.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="icon"><i class="fas fa-hand-holding-heart"></i></div>
-                        <h3>Grant Programs</h3>
-                        <p>Access funding opportunities for education, business, and innovation.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <footer class="footer">
-            <div class="container">
-                <div class="brand">🏦 Pioneer<span class="gold">Trust</span></div>
-                <div class="footer-links">
-                    <a href="#">Privacy</a>
-                    <a href="#">Terms</a>
-                    <a href="#">Support</a>
-                    <a href="#">Careers</a>
-                </div>
-                <div style="font-size:0.8rem;">&copy; 2026 PioneerTrust. All rights reserved.</div>
-            </div>
-        </footer>
-    </div>
-
-    <!-- ============================================================
-    PAGE: LOGIN
-    ============================================================ -->
-    <div class="auth-wrapper" id="pageLogin">
-        <div class="auth-card">
-            <div class="auth-brand">
-                <h2>🏦 Pioneer<span class="gold">Trust</span></h2>
-                <p>Welcome back! Log in to your account.</p>
-            </div>
-            <form id="loginForm" onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label>Email <span class="required">*</span></label>
-                    <input type="email" class="form-control" id="loginEmail" placeholder="you@example.com" value="demo@pioneertrust.com" required />
-                </div>
-                <div class="form-group">
-                    <label>Password <span class="required">*</span></label>
-                    <input type="password" class="form-control" id="loginPassword" placeholder="Enter password" value="password123" required />
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:8px;">
-                    <label style="font-size:0.85rem;color:var(--text-secondary);display:flex;align-items:center;gap:6px;cursor:pointer;">
-                        <input type="checkbox" /> Remember me
-                    </label>
-                    <a href="#" style="font-size:0.85rem;color:var(--gold);font-weight:600;">Forgot password?</a>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">Log In</button>
-            </form>
-            <div class="auth-divider">or</div>
-            <button class="btn btn-outline btn-block" onclick="navigateTo('register')">
-                <i class="fas fa-user-plus"></i> Create Account
-            </button>
-            <div class="auth-footer">
-                Don't have an account? <a onclick="navigateTo('register')">Sign up now</a>
-            </div>
+    <section class="flex-1 flex flex-col md:flex-row items-center justify-between gap-8 px-6 md:px-12 py-12 max-w-7xl mx-auto w-full">
+      <div class="max-w-xl">
+        <div class="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-4">
+          <i class="fas fa-shield-alt"></i> 100% Secure Banking
         </div>
-    </div>
-
-    <!-- ============================================================
-    PAGE: REGISTER
-    ============================================================ -->
-    <div class="auth-wrapper" id="pageRegister">
-        <div class="auth-card">
-            <div class="auth-brand">
-                <h2>🏦 Pioneer<span class="gold">Trust</span></h2>
-                <p>Start your journey to financial freedom.</p>
-            </div>
-            <form id="registerForm" onsubmit="handleRegister(event)">
-                <div class="form-group">
-                    <label>Full Name <span class="required">*</span></label>
-                    <input type="text" class="form-control" id="regName" placeholder="John Doe" required />
-                </div>
-                <div class="form-group">
-                    <label>Email <span class="required">*</span></label>
-                    <input type="email" class="form-control" id="regEmail" placeholder="john@example.com" required />
-                </div>
-                <div class="form-group">
-                    <label>Phone</label>
-                    <input type="tel" class="form-control" id="regPhone" placeholder="+1 234 567 8900" />
-                </div>
-                <div class="form-group">
-                    <label>Password <span class="required">*</span></label>
-                    <input type="password" class="form-control" id="regPassword" placeholder="Min 8 characters" minlength="8" required />
-                </div>
-                <div class="form-group">
-                    <label>Confirm Password <span class="required">*</span></label>
-                    <input type="password" class="form-control" id="regConfirm" placeholder="Confirm password" required />
-                </div>
-                <div class="form-group" style="margin-bottom:22px;">
-                    <label style="font-size:0.85rem;color:var(--text-secondary);display:flex;align-items:flex-start;gap:8px;cursor:pointer;">
-                        <input type="checkbox" required style="margin-top:4px;" /> I agree to the <a href="#" style="color:var(--gold);font-weight:600;">Terms</a> &amp; <a href="#" style="color:var(--gold);font-weight:600;">Privacy Policy</a>
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-gold btn-block">Create Account</button>
-            </form>
-            <div class="auth-footer">
-                Already have an account? <a onclick="navigateTo('login')">Log in</a>
-            </div>
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+          Banking <span class="text-primary">made</span><br/>
+          <span class="text-accent">simple</span> &amp; secure
+        </h1>
+        <p class="text-gray-600 mt-4 text-lg">Join millions who trust PioneerTrust for their digital banking, investments, and financial growth.</p>
+        <div class="flex flex-wrap gap-4 mt-6">
+          <button onclick="showRegister()" class="btn-primary text-base px-8 py-3">
+            <i class="fas fa-user-plus mr-2"></i>Open Account
+          </button>
+          <button onclick="showLogin()" class="btn-outline text-base px-8 py-3">
+            <i class="fas fa-sign-in-alt mr-2"></i>Login
+          </button>
         </div>
-    </div>
-
-    <!-- ============================================================
-    PAGE: DASHBOARD
-    ============================================================ -->
-    <div class="dashboard-wrapper" id="pageDashboard">
-        <div class="container">
-            <div class="dashboard-grid">
-
-                <!-- Sidebar -->
-                <aside class="sidebar" id="sidebar">
-                    <div class="sidebar-user">
-                        <div class="avatar" id="userAvatar">JD</div>
-                        <div>
-                            <h4 id="userName">John Doe</h4>
-                            <p id="userEmail">john@example.com</p>
-                        </div>
-                    </div>
-                    <nav class="sidebar-nav">
-                        <a class="active" data-tab="overview"><i class="fas fa-th-large"></i> Overview</a>
-                        <a data-tab="transactions"><i class="fas fa-list-ul"></i> Transactions</a>
-                        <a data-tab="transfer" onclick="openModal('sendModal')"><i class="fas fa-paper-plane"></i> Transfer</a>
-                        <a data-tab="investments"><i class="fas fa-chart-line"></i> Investments</a>
-                        <a data-tab="grants"><i class="fas fa-hand-holding-heart"></i> Grants</a>
-                        <a data-tab="settings" onclick="openModal('settingsModal')"><i class="fas fa-cog"></i> Settings</a>
-                        <a class="logout-item" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                    </nav>
-                </aside>
-
-                <!-- Main -->
-                <main class="dashboard-main">
-
-                    <!-- Welcome -->
-                    <div class="welcome-banner">
-                        <div>
-                            <h2 id="welcomeMessage">Welcome back, John! 👋</h2>
-                            <p>Here's what's happening with your finances today.</p>
-                        </div>
-                        <div class="badge">
-                            <i class="far fa-calendar-alt"></i> <span id="currentDate"></span>
-                        </div>
-                    </div>
-
-                    <!-- Balances -->
-                    <div class="balance-grid">
-                        <div class="balance-card gold">
-                            <div class="label">Total Balance</div>
-                            <div class="amount" id="totalBalance">$0.00</div>
-                            <div class="change positive">+2.4% this month</div>
-                        </div>
-                        <div class="balance-card">
-                            <div class="label">Income</div>
-                            <div class="amount" id="totalIncome">$0.00</div>
-                            <div class="change positive">+12.5%</div>
-                        </div>
-                        <div class="balance-card">
-                            <div class="label">Expenses</div>
-                            <div class="amount" id="totalExpenses">$0.00</div>
-                            <div class="change negative">-3.2%</div>
-                        </div>
-                        <div class="balance-card">
-                            <div class="label">Investments</div>
-                            <div class="amount" id="totalInvestments">$0.00</div>
-                            <div class="change positive">+8.1%</div>
-                        </div>
-                    </div>
-
-                    <!-- Quick Actions -->
-                    <div class="quick-grid">
-                        <button class="quick-btn" onclick="openModal('sendModal')">
-                            <span>💸</span>
-                            <span class="label">Send</span>
-                        </button>
-                        <button class="quick-btn" onclick="openModal('requestModal')">
-                            <span>📥</span>
-                            <span class="label">Request</span>
-                        </button>
-                        <button class="quick-btn" onclick="openModal('investModal')">
-                            <span>📈</span>
-                            <span class="label">Invest</span>
-                        </button>
-                        <button class="quick-btn" onclick="openModal('grantModal')">
-                            <span>🎯</span>
-                            <span class="label">Apply Grant</span>
-                        </button>
-                        <button class="quick-btn" onclick="openModal('historyModal')">
-                            <span>📊</span>
-                            <span class="label">History</span>
-                        </button>
-                        <button class="quick-btn" onclick="openModal('settingsModal')">
-                            <span>⚙️</span>
-                            <span class="label">Settings</span>
-                        </button>
-                    </div>
-
-                    <!-- Investment Section -->
-                    <div class="investment-section" id="investmentSection">
-                        <div class="section-title">
-                            <i class="fas fa-chart-line"></i> Investment Portfolio
-                            <button class="btn btn-gold btn-sm" style="margin-left:auto;" onclick="openModal('investModal')">
-                                <i class="fas fa-plus"></i> Invest Now
-                            </button>
-                        </div>
-                        <div class="investment-grid" id="investmentGrid">
-                            <!-- Rendered by JS -->
-                        </div>
-                        <div class="invest-summary" id="investSummary">
-                            <!-- Rendered by JS -->
-                        </div>
-                    </div>
-
-                    <!-- Grants Section -->
-                    <div class="grants-section" id="grantsSection">
-                        <div class="section-title">
-                            <i class="fas fa-hand-holding-heart"></i> Grant Applications
-                            <button class="btn btn-info btn-sm" style="margin-left:auto;" onclick="openModal('grantModal')">
-                                <i class="fas fa-plus"></i> Apply for Grant
-                            </button>
-                        </div>
-                        <div class="grants-grid" id="grantsGrid">
-                            <!-- Rendered by JS -->
-                        </div>
-                    </div>
-
-                    <!-- Transactions -->
-                    <div class="tx-container">
-                        <div class="tx-header">
-                            <h3><i class="fas fa-clock"></i> Recent Transactions</h3>
-                            <div class="tx-filters" id="txFilters">
-                                <button class="active" data-filter="all">All</button>
-                                <button data-filter="income">Income</button>
-                                <button data-filter="expense">Expenses</button>
-                                <button data-filter="transfer">Transfers</button>
-                                <button data-filter="investment">Investments</button>
-                            </div>
-                        </div>
-                        <div id="transactionList">
-                            <!-- Rendered by JS -->
-                        </div>
-                    </div>
-
-                </main>
-            </div>
+        <div class="flex items-center gap-6 mt-8 text-sm text-gray-500">
+          <span><i class="fas fa-check-circle text-primary mr-1"></i> 2.4M users</span>
+          <span><i class="fas fa-check-circle text-primary mr-1"></i> FDIC insured</span>
+          <span><i class="fas fa-check-circle text-primary mr-1"></i> 24/7 support</span>
         </div>
-    </div>
-
-    <!-- ============================================================
-    MODALS
-    ============================================================ -->
-
-    <!-- Send Money -->
-    <div class="modal-overlay" id="sendModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3>💸 Send Money</h3>
-                <button class="modal-close" onclick="closeModal('sendModal')">✕</button>
-            </div>
-            <form id="sendForm" onsubmit="handleSend(event)">
-                <div class="form-group">
-                    <label>Recipient <span class="required">*</span></label>
-                    <input type="text" class="form-control" id="sendRecipient" placeholder="Email or phone" required />
-                </div>
-                <div class="form-group">
-                    <label>Amount <span class="required">*</span></label>
-                    <input type="number" class="form-control" id="sendAmount" placeholder="0.00" min="0.01" step="0.01" required />
-                </div>
-                <div class="form-group">
-                    <label>Note</label>
-                    <input type="text" class="form-control" id="sendNote" placeholder="What's this for?" />
-                </div>
-                <button type="submit" class="btn btn-gold btn-block">Send Money</button>
-            </form>
+        <div class="mt-4 text-sm text-gray-400 flex items-center gap-2">
+          <i class="fas fa-envelope text-primary"></i>
+          <a href="mailto:s.g82317245@gmail.com" class="hover:text-primary transition-smooth">s.g82317245@gmail.com</a>
         </div>
-    </div>
-
-    <!-- Request Money -->
-    <div class="modal-overlay" id="requestModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3>📥 Request Money</h3>
-                <button class="modal-close" onclick="closeModal('requestModal')">✕</button>
-            </div>
-            <form id="requestForm" onsubmit="handleRequest(event)">
-                <div class="form-group">
-                    <label>From <span class="required">*</span></label>
-                    <input type="text" class="form-control" id="requestFrom" placeholder="Email or phone" required />
-                </div>
-                <div class="form-group">
-                    <label>Amount <span class="required">*</span></label>
-                    <input type="number" class="form-control" id="requestAmount" placeholder="0.00" min="0.01" step="0.01" required />
-                </div>
-                <div class="form-group">
-                    <label>Reason</label>
-                    <input type="text" class="form-control" id="requestReason" placeholder="e.g., Dinner split" />
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">Send Request</button>
-            </form>
+      </div>
+      <div class="w-full max-w-md bg-white p-6 rounded-3xl shadow-soft glass border border-gray-100">
+        <div class="flex justify-between"><span class="text-gray-500">Total Balance</span> <span class="font-bold text-2xl text-primary">$12,450.80</span></div>
+        <div class="grid grid-cols-2 gap-3 mt-4 text-sm">
+          <div class="bg-gray-50 p-3 rounded-xl"><span class="text-gray-500">Savings</span><div class="font-semibold">$5,200</div></div>
+          <div class="bg-gray-50 p-3 rounded-xl"><span class="text-gray-500">Current</span><div class="font-semibold">$3,750</div></div>
+          <div class="bg-gray-50 p-3 rounded-xl"><span class="text-gray-500">Investment</span><div class="font-semibold">$3,500</div></div>
+          <div class="bg-gray-50 p-3 rounded-xl"><span class="text-gray-500">Portfolio</span><div class="font-semibold">$8,200</div></div>
         </div>
-    </div>
-
-    <!-- Invest Modal -->
-    <div class="modal-overlay" id="investModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3>📈 Invest Now</h3>
-                <button class="modal-close" onclick="closeModal('investModal')">✕</button>
-            </div>
-            <form id="investForm" onsubmit="handleInvest(event)">
-                <div class="form-group">
-                    <label>Investment Plan <span class="required">*</span></label>
-                    <select class="form-control" id="investPlan">
-                        <option value="Starter">Starter - 5% ROI (30 days)</option>
-                        <option value="Growth">Growth - 8% ROI (60 days)</option>
-                        <option value="Premium">Premium - 12% ROI (90 days)</option>
-                        <option value="Elite">Elite - 18% ROI (180 days)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Amount <span class="required">*</span></label>
-                    <input type="number" class="form-control" id="investAmount" placeholder="Minimum $100" min="100" step="10" required />
-                </div>
-                <div class="form-group">
-                    <label>Investment Goal</label>
-                    <input type="text" class="form-control" id="investGoal" placeholder="e.g., Retirement, Education, Business" />
-                </div>
-                <button type="submit" class="btn btn-success btn-block">Invest Now</button>
-            </form>
+        <div class="flex flex-wrap gap-2 mt-4">
+          <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs"><i class="fas fa-paper-plane mr-1"></i>Send</span>
+          <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs"><i class="fas fa-arrow-down mr-1"></i>Receive</span>
+          <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs"><i class="fas fa-file-invoice mr-1"></i>Bills</span>
+          <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs"><i class="fas fa-wifi mr-1"></i>Airtime</span>
         </div>
+      </div>
+    </section>
+
+    <div class="max-w-7xl mx-auto px-6 py-8 w-full grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white p-5 rounded-2xl shadow-soft card-hover"><i class="fas fa-users text-2xl text-primary"></i><div class="text-2xl font-bold mt-2">2.4M</div><div class="text-gray-500">Active users</div></div>
+      <div class="bg-white p-5 rounded-2xl shadow-soft card-hover"><i class="fas fa-exchange-alt text-2xl text-primary"></i><div class="text-2xl font-bold mt-2">$8.2B</div><div class="text-gray-500">Transactions processed</div></div>
+      <div class="bg-white p-5 rounded-2xl shadow-soft card-hover"><i class="fas fa-star text-2xl text-primary"></i><div class="text-2xl font-bold mt-2">4.9★</div><div class="text-gray-500">Trustpilot rating</div></div>
     </div>
 
-    <!-- Grant Application Modal -->
-    <div class="modal-overlay" id="grantModal">
-        <div class="modal" style="max-width:550px;">
-            <div class="modal-header">
-                <h3>🎯 Apply for Grant</h3>
-                <button class="modal-close" onclick="closeModal('grantModal')">✕</button>
-            </div>
-            <form id="grantForm" onsubmit="handleGrantApply(event)">
-                <div class="form-group">
-                    <label>Grant Program <span class="required">*</span></label>
-                    <select class="form-control" id="grantProgram">
-                        <option value="Education Grant">Education Grant - Up to $10,000</option>
-                        <option value="Business Grant">Business Grant - Up to $25,000</option>
-                        <option value="Innovation Grant">Innovation Grant - Up to $50,000</option>
-                        <option value="Community Grant">Community Grant - Up to $5,000</option>
-                        <option value="Research Grant">Research Grant - Up to $30,000</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Full Name <span class="required">*</span></label>
-                    <input type="text" class="form-control" id="grantName" placeholder="Your full name" required />
-                </div>
-                <div class="form-group">
-                    <label>Email <span class="required">*</span></label>
-                    <input type="email" class="form-control" id="grantEmail" placeholder="your@email.com" required />
-                </div>
-                <div class="form-group">
-                    <label>Amount Requested <span class="required">*</span></label>
-                    <input type="number" class="form-control" id="grantAmount" placeholder="0.00" min="100" step="100" required />
-                </div>
-                <div class="form-group">
-                    <label>Project / Purpose <span class="required">*</span></label>
-                    <textarea class="form-control" id="grantPurpose" placeholder="Describe your project or purpose for this grant..." rows="3" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Additional Documents (URL)</label>
-                    <input type="text" class="form-control" id="grantDocs" placeholder="Link to proposal, portfolio, etc." />
-                </div>
-                <button type="submit" class="btn btn-info btn-block">Submit Application</button>
-            </form>
+    <footer class="bg-white border-t border-gray-200 px-6 py-8 text-center text-sm text-gray-500 mt-8">
+      © 2026 PioneerTrust – secure digital banking. All rights reserved.
+      <span class="block mt-1 text-xs"><i class="fas fa-envelope mr-1"></i> <a href="mailto:s.g82317245@gmail.com" class="hover:text-primary transition-smooth">s.g82317245@gmail.com</a></span>
+    </footer>
+  </div>
+
+  <!-- ===== REGISTER PAGE ===== -->
+  <div id="registerPage" class="hidden min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
+    <div class="bg-white w-full max-w-lg rounded-2xl shadow-xl p-8 border border-gray-200 relative">
+      <button onclick="goBackToLanding()" class="absolute left-4 top-4 text-gray-400 hover:text-primary transition-smooth text-xl">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <div class="text-center mb-6">
+        <i class="fas fa-user-plus text-4xl text-primary"></i>
+        <h2 class="text-2xl font-bold mt-2">Create Account</h2>
+        <p class="text-gray-500 text-sm">Join PioneerTrust today</p>
+      </div>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+          <input type="text" id="regFullName" placeholder="Enter your full name" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition" />
         </div>
-    </div>
-
-    <!-- History Modal -->
-    <div class="modal-overlay" id="historyModal">
-        <div class="modal" style="max-width:580px;">
-            <div class="modal-header">
-                <h3>📊 Full Transaction History</h3>
-                <button class="modal-close" onclick="closeModal('historyModal')">✕</button>
-            </div>
-            <div id="historyList" style="max-height:400px;overflow-y:auto;">
-                <!-- Rendered by JS -->
-            </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+          <input type="email" id="regEmail" placeholder="Enter your email" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition" />
         </div>
-    </div>
-
-    <!-- Settings Modal -->
-    <div class="modal-overlay" id="settingsModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3>⚙️ Settings</h3>
-                <button class="modal-close" onclick="closeModal('settingsModal')">✕</button>
-            </div>
-            <form id="settingsForm" onsubmit="handleSettings(event)">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" class="form-control" id="settingsName" />
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" class="form-control" id="settingsEmail" />
-                </div>
-                <div class="form-group">
-                    <label>Phone</label>
-                    <input type="tel" class="form-control" id="settingsPhone" />
-                </div>
-                <div class="form-group">
-                    <label>Currency</label>
-                    <select class="form-control" id="settingsCurrency">
-                        <option value="USD">USD - US Dollar</option>
-                        <option value="EUR">EUR - Euro</option>
-                        <option value="GBP">GBP - British Pound</option>
-                        <option value="NGN">NGN - Nigerian Naira</option>
-                        <option value="KES">KES - Kenyan Shilling</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">Save Settings</button>
-            </form>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+          <input type="tel" id="regPhone" placeholder="+1 234 567 890" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition" />
         </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+          <input type="date" id="regDob" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+          <input type="password" id="regPassword" placeholder="Min 8 characters" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition" />
+          <div class="h-1 w-full bg-gray-200 rounded mt-2 overflow-hidden"><div id="strengthBar" class="h-1 rounded transition-all w-0 bg-red-500"></div></div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+          <input type="password" id="regConfirm" placeholder="Confirm password" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition" />
+        </div>
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="termsCheck" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary" />
+          <label for="termsCheck" class="text-sm text-gray-600">I agree to the <a href="#" class="text-primary hover:underline">Terms & Conditions</a></label>
+        </div>
+        <button id="createAccountBtn" class="w-full btn-primary py-3 rounded-lg text-lg font-semibold hover:bg-primary-dark transition">Create Account</button>
+        <p class="text-center text-sm text-gray-500 mt-2">Already have an account? <a href="#" onclick="showLogin()" class="text-primary font-medium hover:underline">Sign in</a></p>
+      </div>
     </div>
+  </div>
 
-    <!-- ============================================================
-    JAVASCRIPT
-    ============================================================ -->
-    <script>
-        // ============================================================
-        // STATE
-        // ============================================================
-        const state = {
-            user: null,
-            balance: 12450.75,
-            investments: [
-                { id: 1, plan: 'Growth', amount: 5000, roi: 8, startDate: '2026-07-15', endDate: '2026-09-13',
-                status: 'active', returns: 400 },
-                { id: 2, plan: 'Starter', amount: 2000, roi: 5, startDate: '2026-08-01', endDate: '2026-08-31',
-                    status: 'active', returns: 100 },
-                { id: 3, plan: 'Premium', amount: 10000, roi: 12, startDate: '2026-05-10', endDate: '2026-08-08',
-                    status: 'completed', returns: 1200 },
-            ],
-            grants: [
-                { id: 1, program: 'Education Grant', amount: 5000, purpose: 'University tuition assistance',
-                    status: 'approved', date: '2026-07-20' },
-                { id: 2, program: 'Business Grant', amount: 15000, purpose: 'Small business expansion', status: 'pending',
-                    date: '2026-08-10' },
-                { id: 3, program: 'Innovation Grant', amount: 25000, purpose: 'Tech startup prototype', status: 'review',
-                    date: '2026-08-05' },
-            ],
-            transactions: [
-                { id: 1, type: 'income', name: 'Salary Deposit', description: 'Monthly salary', amount: 4500.00,
-                    date: '2026-08-15T10:30:00', status: 'completed', icon: '💰' },
-                { id: 2, type: 'expense', name: 'Coffee Shop', description: 'Morning coffee', amount: 12.50,
-                    date: '2026-08-16T08:15:00', status: 'completed', icon: '☕' },
-                { id: 3, type: 'expense', name: 'Uber Ride', description: 'Airport transfer', amount: 24.80,
-                    date: '2026-08-16T14:20:00', status: 'completed', icon: '🚗' },
-                { id: 4, type: 'expense', name: 'Amazon', description: 'Electronics', amount: 89.99,
-                    date: '2026-08-14T18:45:00', status: 'completed', icon: '📦' },
-                { id: 5, type: 'transfer', name: 'Transfer to Sarah', description: 'Rent payment', amount: 1200.00,
-                    date: '2026-08-13T09:00:00', status: 'completed', icon: '📤' },
-                { id: 6, type: 'income', name: 'Freelance Payment', description: 'Web project', amount: 750.00,
-                    date: '2026-08-12T16:00:00', status: 'completed', icon: '💻' },
-                { id: 7, type: 'investment', name: 'Growth Investment', description: '8% ROI - 60 days', amount: 5000.00,
-                    date: '2026-07-15T09:00:00', status: 'completed', icon: '📈' },
-                { id: 8, type: 'investment', name: 'Premium Investment', description: '12% ROI - 90 days', amount: 10000.00,
-                    date: '2026-05-10T14:30:00', status: 'completed', icon: '📈' },
-                { id: 9, type: 'income', name: 'Grant Approval', description: 'Education Grant', amount: 5000.00,
-                    date: '2026-07-20T11:00:00', status: 'completed', icon: '🎯' },
-            ],
-            settings: {
-                name: 'John Doe',
-                email: 'john@example.com',
-                phone: '+1 234 567 8900',
-                currency: 'USD'
-            },
-            currentFilter: 'all'
+  <!-- ===== LOGIN PAGE ===== -->
+  <div id="loginPage" class="hidden min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
+    <div class="bg-white w-full max-w-md rounded-2xl shadow-xl p-8 border border-gray-200 relative">
+      <button onclick="goBackToLanding()" class="absolute left-4 top-4 text-gray-400 hover:text-primary transition-smooth text-xl">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <div class="text-center mb-6">
+        <i class="fas fa-sign-in-alt text-4xl text-primary"></i>
+        <h2 class="text-2xl font-bold mt-2">Welcome Back</h2>
+        <p class="text-gray-500 text-sm">Sign in to your PioneerTrust account</p>
+      </div>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          <input type="email" id="loginEmail" placeholder="Enter your email" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition" />
+        </div>
+        <div class="relative">
+          <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter your password" class="w-full border border-gray-300 rounded-lg p-3 pr-12 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition" />
+          <i class="fas fa-eye absolute right-3 top-10 text-gray-400 cursor-pointer hover:text-primary transition" id="toggleLoginPwd"></i>
+        </div>
+        <div class="text-right"><a href="#" id="forgotPwdLink" class="text-sm text-primary hover:underline">Forgot password?</a></div>
+        <button id="signInBtn" class="w-full btn-primary py-3 rounded-lg text-lg font-semibold hover:bg-primary-dark transition flex items-center justify-center gap-2">
+          <span>Sign In</span> <i class="fas fa-arrow-right"></i>
+        </button>
+        <p class="text-center text-sm text-gray-500 mt-2">Don't have an account? <a href="#" onclick="showRegister()" class="text-primary font-medium hover:underline">Register</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== USER DASHBOARD ===== -->
+  <div id="dashboardPage" class="hidden min-h-screen flex bg-gray-50">
+    <aside class="w-64 bg-white border-r border-gray-200/80 p-4 fixed top-0 left-0 h-full overflow-y-auto no-scrollbar hidden md:block z-40">
+      <div class="flex items-center gap-2 mb-8"><i class="fas fa-landmark text-2xl text-primary"></i><span class="text-xl font-bold text-primary">Pioneer<span class="text-accent">Trust</span></span></div>
+      <nav class="space-y-1">
+        <a href="#" onclick="showSection('dashboard')" class="sidebar-link active" data-section="dashboard"><i class="fas fa-th-large w-5"></i> Dashboard</a>
+        <a href="#" onclick="showSection('accounts')" class="sidebar-link" data-section="accounts"><i class="fas fa-wallet w-5"></i> Accounts</a>
+        <a href="#" onclick="showSection('transfers')" class="sidebar-link" data-section="transfers"><i class="fas fa-exchange-alt w-5"></i> Transfers</a>
+        <a href="#" onclick="showSection('transactions')" class="sidebar-link" data-section="transactions"><i class="fas fa-list-ul w-5"></i> Transactions</a>
+        <a href="#" onclick="showSection('investments')" class="sidebar-link" data-section="investments"><i class="fas fa-chart-line w-5"></i> Investments</a>
+        <a href="#" onclick="showSection('grants')" class="sidebar-link" data-section="grants"><i class="fas fa-hand-holding-heart w-5"></i> Grants</a>
+        <a href="#" onclick="showSection('loans')" class="sidebar-link" data-section="loans"><i class="fas fa-hand-holding-usd w-5"></i> Loans</a>
+        <a href="#" onclick="showSection('cards')" class="sidebar-link" data-section="cards"><i class="fas fa-credit-card w-5"></i> Cards</a>
+        <a href="#" onclick="showSection('settings')" class="sidebar-link" data-section="settings"><i class="fas fa-cog w-5"></i> Settings</a>
+        <a href="#" onclick="logout()" class="sidebar-link text-red-500 hover:bg-red-50"><i class="fas fa-sign-out-alt w-5"></i> Logout</a>
+      </nav>
+      <div class="mt-8 pt-4 border-t border-gray-200 text-xs text-gray-400 flex items-center gap-2">
+        <i class="fas fa-envelope text-primary"></i>
+        <a href="mailto:s.g82317245@gmail.com" class="hover:text-primary transition-smooth">s.g82317245@gmail.com</a>
+      </div>
+    </aside>
+
+    <div class="md:ml-64 flex-1 p-4 md:p-8 w-full">
+      <div class="flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl shadow-sm border border-gray-100 mb-6">
+        <div class="flex items-center gap-4">
+          <i class="fas fa-bars text-xl md:hidden cursor-pointer text-gray-600 hover:text-primary" onclick="toggleMobileSidebar()"></i>
+          <div class="relative">
+            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <input type="text" placeholder="Search accounts, transactions..." class="pl-10 pr-4 py-2 border border-gray-200 rounded-full w-48 md:w-64 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-smooth" />
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <button class="relative text-gray-600 hover:text-primary transition-smooth">
+            <i class="fas fa-bell text-xl"></i>
+            <span class="absolute -top-1 -right-1 w-4 h-4 bg-accent rounded-full text-[10px] text-white flex items-center justify-center font-bold">3</span>
+          </button>
+          <div class="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-3 py-1.5 rounded-full transition-smooth">
+            <img src="https://i.pravatar.cc/40?img=11" class="w-9 h-9 rounded-full border-2 border-primary" alt="avatar" />
+            <div class="hidden sm:block">
+              <span class="text-sm font-medium block" id="dashboardUserName">Brown Robert Sanford</span>
+              <span class="text-xs text-gray-500">Premium Member</span>
+            </div>
+          </div>
+          <button onclick="toggleDarkMode()" class="text-gray-600 hover:text-primary transition-smooth text-xl">
+            <i class="fas fa-moon"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="sectionContainer" class="space-y-6">
+        <!-- DASHBOARD -->
+        <div id="section-dashboard" class="section-content">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-2xl font-bold">Good morning,</h2>
+              <p class="text-xl font-semibold text-primary" id="dashboardGreetingName">Brown Robert Sanford</p>
+              <p class="text-sm text-gray-500">Here's what's happening with your accounts today.</p>
+            </div>
+            <span class="text-sm text-gray-500">Last updated: Today</span>
+          </div>
+
+          <div class="mt-4 bg-white p-5 rounded-2xl shadow-soft border-l-4 border-primary flex justify-between items-center">
+            <div>
+              <span class="text-gray-500 text-sm">Total Pending Amount</span>
+              <div class="text-3xl font-bold text-primary">$150,000</div>
+              <span class="text-xs text-gray-400">Across 5 accounts</span>
+            </div>
+            <div class="flex gap-2 flex-wrap">
+              <button class="bg-primary text-white px-4 py-2 rounded-full text-sm hover:bg-primary-dark transition"><i class="fas fa-exchange-alt mr-1"></i>Transfer</button>
+              <button class="bg-green-500 text-white px-4 py-2 rounded-full text-sm hover:bg-green-600 transition"><i class="fas fa-clock mr-1"></i>Recent</button>
+              <button class="bg-orange-500 text-white px-4 py-2 rounded-full text-sm hover:bg-orange-600 transition"><i class="fas fa-file-invoice mr-1"></i>Pay Bills</button>
+              <button class="bg-purple-500 text-white px-4 py-2 rounded-full text-sm hover:bg-purple-600 transition"><i class="fas fa-ellipsis-h mr-1"></i>More</button>
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <div class="flex justify-between items-center mb-3">
+              <h3 class="text-lg font-bold">Accounts</h3>
+              <a href="#" class="text-sm text-primary hover:underline">View all</a>
+            </div>
+            <div class="space-y-3" id="accountsList"></div>
+          </div>
+        </div>
+
+        <div id="section-accounts" class="section-content hidden"><h2 class="text-2xl font-bold">Accounts</h2><div id="accountsListFull" class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4"></div><button onclick="createAccount()" class="mt-4 bg-primary text-white px-5 py-2.5 rounded-full hover:bg-primary-dark transition-smooth"><i class="fas fa-plus mr-2"></i> New Account</button></div>
+        <div id="section-transfers" class="section-content hidden"><h2 class="text-2xl font-bold">Transfers</h2><p class="text-gray-500">Transfer between accounts or to other banks</p><div class="bg-white p-6 rounded-2xl shadow-soft mt-4 max-w-md"><input placeholder="Amount" class="border p-3 rounded-lg w-full mb-3 focus:outline-none focus:ring-2 focus:ring-primary/30"/><button class="bg-primary text-white px-6 py-2.5 rounded-full w-full hover:bg-primary-dark transition-smooth">Transfer</button></div></div>
+        <div id="section-transactions" class="section-content hidden"><h2 class="text-2xl font-bold">Transactions</h2><div class="bg-white p-4 rounded-2xl shadow-soft mt-4 flex gap-3"><button class="bg-primary text-white px-4 py-2 rounded-full text-sm hover:bg-primary-dark transition-smooth"><i class="fas fa-file-csv mr-2"></i>Export CSV</button><button class="border border-gray-300 px-4 py-2 rounded-full text-sm hover:bg-gray-50 transition-smooth"><i class="fas fa-filter mr-2"></i>Filter</button></div></div>
+        <div id="section-investments" class="section-content hidden"><h2 class="text-2xl font-bold">Investments</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4"><div class="bg-white p-5 rounded-2xl shadow-soft">Mutual Funds <span class="float-right text-primary font-bold">+8.2%</span></div><div class="bg-white p-5 rounded-2xl shadow-soft">Stocks <span class="float-right text-accent font-bold">-1.3%</span></div><div class="bg-white p-5 rounded-2xl shadow-soft">Crypto <span class="float-right text-primary font-bold">+12%</span></div><div class="bg-white p-5 rounded-2xl shadow-soft">Treasury Bills <span class="float-right text-primary font-bold">+4.5%</span></div></div></div>
+        <div id="section-grants" class="section-content hidden"><h2 class="text-2xl font-bold">Grants</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4"><div class="bg-white p-5 rounded-2xl shadow-soft">Student Grant <span class="text-sm text-gray-500">$5k</span> <button class="bg-primary text-white text-xs px-4 py-1.5 rounded-full float-right hover:bg-primary-dark transition-smooth">Apply</button></div><div class="bg-white p-5 rounded-2xl shadow-soft">Business Grant <span class="text-sm text-gray-500">$25k</span> <button class="bg-primary text-white text-xs px-4 py-1.5 rounded-full float-right hover:bg-primary-dark transition-smooth">Apply</button></div></div></div>
+        <div id="section-loans" class="section-content hidden"><h2 class="text-2xl font-bold">Loans</h2><div class="bg-white p-6 rounded-2xl shadow-soft max-w-md"><p class="text-gray-500 mb-3">Loan calculator &amp; repayment schedule</p><div class="flex gap-2"><input placeholder="Amount" class="border p-3 rounded-lg flex-1 focus:outline-none focus:ring-2 focus:ring-primary/30"/><button class="bg-primary text-white px-6 py-2.5 rounded-full hover:bg-primary-dark transition-smooth">Calculate</button></div></div></div>
+        <div id="section-cards" class="section-content hidden"><h2 class="text-2xl font-bold">Cards</h2><div class="bg-gradient-to-r from-primary/90 to-primary/60 p-6 rounded-2xl text-white w-80 mt-4 shadow-xl"><i class="fas fa-credit-card text-3xl"></i><div class="mt-6 text-xl tracking-wider">**** 1234</div><div class="flex justify-between mt-4"><span id="cardHolderName">Brown Robert Sanford</span><span>12/26</span></div><div class="mt-6 flex gap-2"><button class="bg-white/20 px-4 py-1.5 rounded-full text-sm hover:bg-white/30 transition-smooth">Freeze</button><button class="bg-white/20 px-4 py-1.5 rounded-full text-sm hover:bg-white/30 transition-smooth">Show</button></div></div></div>
+        <div id="section-settings" class="section-content hidden"><h2 class="text-2xl font-bold">Settings</h2><div class="bg-white p-6 rounded-2xl shadow-soft mt-4 max-w-md"><label class="flex items-center justify-between py-2 border-b"><span>Two-factor authentication</span> <input type="checkbox" class="w-5 h-5 text-primary"/></label><label class="flex items-center justify-between py-2 border-b"><span>Dark mode</span> <input type="checkbox" id="darkToggleSettings" onchange="toggleDarkMode()" class="w-5 h-5 text-primary"/></label><label class="flex items-center justify-between py-2"><span>Email notifications</span> <input type="checkbox" checked class="w-5 h-5 text-primary"/></label></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Sidebar -->
+  <div id="mobileSidebar" class="fixed inset-0 bg-black/40 z-50 hidden" onclick="toggleMobileSidebar()"></div>
+  <div id="mobileSidebarPanel" class="fixed top-0 left-0 w-72 bg-white h-full z-50 p-6 transform -translate-x-full transition-transform duration-300 shadow-2xl">
+    <div class="flex items-center justify-between mb-8">
+      <div class="flex items-center gap-2"><i class="fas fa-landmark text-2xl text-primary"></i><span class="text-xl font-bold text-primary">Pioneer<span class="text-accent">Trust</span></span></div>
+      <button onclick="toggleMobileSidebar()" class="text-gray-500 hover:text-primary"><i class="fas fa-times text-xl"></i></button>
+    </div>
+    <nav class="space-y-1">
+      <a href="#" onclick="showSection('dashboard')" class="sidebar-link active"><i class="fas fa-th-large w-5"></i> Dashboard</a>
+      <a href="#" onclick="showSection('accounts')" class="sidebar-link"><i class="fas fa-wallet w-5"></i> Accounts</a>
+      <a href="#" onclick="showSection('transfers')" class="sidebar-link"><i class="fas fa-exchange-alt w-5"></i> Transfers</a>
+      <a href="#" onclick="showSection('transactions')" class="sidebar-link"><i class="fas fa-list-ul w-5"></i> Transactions</a>
+      <a href="#" onclick="showSection('investments')" class="sidebar-link"><i class="fas fa-chart-line w-5"></i> Investments</a>
+      <a href="#" onclick="showSection('grants')" class="sidebar-link"><i class="fas fa-hand-holding-heart w-5"></i> Grants</a>
+      <a href="#" onclick="showSection('loans')" class="sidebar-link"><i class="fas fa-hand-holding-usd w-5"></i> Loans</a>
+      <a href="#" onclick="showSection('cards')" class="sidebar-link"><i class="fas fa-credit-card w-5"></i> Cards</a>
+      <a href="#" onclick="showSection('settings')" class="sidebar-link"><i class="fas fa-cog w-5"></i> Settings</a>
+      <a href="#" onclick="logout()" class="sidebar-link text-red-500 hover:bg-red-50"><i class="fas fa-sign-out-alt w-5"></i> Logout</a>
+    </nav>
+    <div class="mt-8 pt-4 border-t border-gray-200 text-xs text-gray-400 flex items-center gap-2">
+      <i class="fas fa-envelope text-primary"></i>
+      <a href="mailto:s.g82317245@gmail.com" class="hover:text-primary transition-smooth">s.g82317245@gmail.com</a>
+    </div>
+  </div>
+
+  <script>
+    // ===== EMAILJS CONFIG =====
+    const EMAILJS_PUBLIC_KEY = "k9iUX842tDcGRz4tA";
+    const EMAILJS_SERVICE_ID = "service_26bxxmq";
+    const TEMPLATES = {
+      LOGIN_NOTIFICATION: "template_e6lkldy"
+    };
+
+    // ===== CHECK IF EMAILJS IS LOADED =====
+    function isEmailJSLoaded() {
+      return typeof emailjs !== 'undefined' && typeof emailjs.init === 'function';
+    }
+
+    // ===== INITIALIZE EMAILJS =====
+    function initEmailJS() {
+      console.log('🔧 Initializing EmailJS...');
+      
+      if (!isEmailJSLoaded()) {
+        console.error('❌ EmailJS library not loaded!');
+        return false;
+      }
+
+      try {
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+        console.log('✅ EmailJS initialized successfully');
+        return true;
+      } catch (error) {
+        console.error('❌ EmailJS initialization failed:', error);
+        return false;
+      }
+    }
+
+    // ===== SEND LOGIN NOTIFICATION =====
+    async function sendLoginNotification(user) {
+      console.log('📧 Sending login notification to:', user.email);
+      
+      if (!isEmailJSLoaded()) {
+        console.log('⚠️ EmailJS not loaded, skipping notification');
+        return false;
+      }
+
+      try {
+        const now = new Date();
+        const params = {
+          to_email: user.email,
+          user_name: user.fullName || "User",
+          email: user.email,
+          login_time: now.toLocaleString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          }),
+          ip_address: 'Unable to detect',
+          device_info: navigator.userAgent || 'Unknown device'
         };
 
-        // ============================================================
-        // DOM HELPERS
-        // ============================================================
-        const $ = (sel) => document.querySelector(sel);
-        const $$ = (sel) => document.querySelectorAll(sel);
-
-        // ============================================================
-        // NAVIGATION
-        // ============================================================
-        const pageElements = {
-            landing: document.getElementById('pageLanding'),
-            login: document.getElementById('pageLogin'),
-            register: document.getElementById('pageRegister'),
-            dashboard: document.getElementById('pageDashboard'),
-        };
-
-        const navLinks = {
-            home: document.getElementById('navHome'),
-            login: document.getElementById('navLogin'),
-            register: document.getElementById('navRegister'),
-            dashboard: document.getElementById('navDashboardLink'),
-        };
-
-        function navigateTo(page) {
-            Object.keys(pageElements).forEach(key => {
-                const el = pageElements[key];
-                if (el.classList.contains('page-wrapper')) el.classList.remove('active');
-                if (el.classList.contains('auth-wrapper')) el.classList.remove('active');
-                if (el.classList.contains('dashboard-wrapper')) el.classList.remove('active');
-            });
-
-            if (page === 'landing') {
-                pageElements.landing.classList.add('active');
-                navLinks.home.classList.add('active');
-                navLinks.login.classList.remove('active');
-                navLinks.register.classList.remove('active');
-                navLinks.dashboard.style.display = 'none';
-                document.querySelectorAll('.nav-links a:not(.btn-nav)').forEach(a => a.classList.remove('active'));
-                document.querySelector('.nav-links a[onclick*="landing"]')?.classList.add('active');
-            } else if (page === 'login') {
-                pageElements.login.classList.add('active');
-                navLinks.home.classList.remove('active');
-                navLinks.login.classList.add('active');
-                navLinks.register.classList.remove('active');
-                navLinks.dashboard.style.display = 'none';
-            } else if (page === 'register') {
-                pageElements.register.classList.add('active');
-                navLinks.home.classList.remove('active');
-                navLinks.login.classList.remove('active');
-                navLinks.register.classList.add('active');
-                navLinks.dashboard.style.display = 'none';
-            } else if (page === 'dashboard') {
-                pageElements.dashboard.classList.add('active');
-                navLinks.home.classList.remove('active');
-                navLinks.login.classList.remove('active');
-                navLinks.register.classList.remove('active');
-                navLinks.dashboard.style.display = 'block';
-                renderDashboard();
-            }
-
-            document.getElementById('navLinks').classList.remove('open');
-            document.getElementById('navToggle').classList.remove('active');
-            document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open'));
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // ============================================================
-        // TOAST
-        // ============================================================
-        function showToast(message, type = 'info', title = '') {
-            const container = document.getElementById('toastContainer');
-            const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerHTML = `
-                        <span class="icon">${icons[type] || 'ℹ️'}</span>
-                        <div class="content">
-                            <div class="title">${title || type.charAt(0).toUpperCase() + type.slice(1)}</div>
-                            <div class="message">${message}</div>
-                        </div>
-                        <button class="close-btn" onclick="this.closest('.toast').remove()">✕</button>
-                    `;
-            container.appendChild(toast);
-            setTimeout(() => {
-                toast.style.animation = 'slideOut 0.35s ease forwards';
-                setTimeout(() => toast.remove(), 350);
-            }, 4500);
-        }
-
-        // ============================================================
-        // AUTH
-        // ============================================================
-        function handleLogin(e) {
-            e.preventDefault();
-            const email = document.getElementById('loginEmail').value.trim();
-            const password = document.getElementById('loginPassword').value.trim();
-            if (!email || !password) {
-                showToast('Please fill in all fields.', 'error', 'Login Failed');
-                return;
-            }
-            state.user = {
-                name: email.split('@')[0].replace(/[^a-zA-Z]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'User',
-                email: email,
-                phone: '+1 234 567 8900'
-            };
-            showToast(`Welcome back, ${state.user.name}!`, 'success', 'Login Successful');
-            setTimeout(() => navigateTo('dashboard'), 500);
-        }
-
-        function handleRegister(e) {
-            e.preventDefault();
-            const name = document.getElementById('regName').value.trim();
-            const email = document.getElementById('regEmail').value.trim();
-            const phone = document.getElementById('regPhone').value.trim();
-            const password = document.getElementById('regPassword').value;
-            const confirm = document.getElementById('regConfirm').value;
-
-            if (!name || !email || !password || !confirm) {
-                showToast('Please fill in all required fields.', 'error', 'Registration Failed');
-                return;
-            }
-            if (password.length < 8) {
-                showToast('Password must be at least 8 characters.', 'error', 'Registration Failed');
-                return;
-            }
-            if (password !== confirm) {
-                showToast('Passwords do not match.', 'error', 'Registration Failed');
-                return;
-            }
-            state.user = { name, email, phone: phone || '+1 234 567 8900' };
-            showToast(`Welcome to PioneerTrust, ${name}!`, 'success', 'Account Created');
-            setTimeout(() => navigateTo('dashboard'), 500);
-        }
-
-        function handleLogout() {
-            state.user = null;
-            showToast('You have been logged out.', 'info', 'Goodbye');
-            setTimeout(() => navigateTo('landing'), 300);
-        }
-
-        // ============================================================
-        // DASHBOARD RENDER
-        // ============================================================
-        function renderDashboard() {
-            if (!state.user) return;
-
-            const initials = state.user.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
-            document.getElementById('userAvatar').textContent = initials || '👤';
-            document.getElementById('userName').textContent = state.user.name;
-            document.getElementById('userEmail').textContent = state.user.email;
-            document.getElementById('welcomeMessage').textContent = `Welcome back, ${state.user.name.split(' ')[0]}! 👋`;
-            document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-
-            const totalIncome = state.transactions.filter(t => t.type === 'income').reduce((s, t) => s + t.amount, 0);
-            const totalExpenses = state.transactions.filter(t => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
-            const totalInvest = state.investments.reduce((s, i) => s + i.amount, 0);
-
-            let balance = 12450.75;
-            state.transactions.forEach(t => {
-                if (t.type === 'income') balance += t.amount;
-                else if (t.type === 'expense' || t.type === 'transfer') balance -= t.amount;
-            });
-            // Add investment returns
-            state.investments.forEach(i => { if (i.status === 'completed') balance += i.returns; });
-            state.balance = balance;
-
-            const symbol = state.settings.currency === 'NGN' ? '₦' :
-                state.settings.currency === 'EUR' ? '€' :
-                state.settings.currency === 'GBP' ? '£' : '$';
-
-            document.getElementById('totalBalance').textContent = `${symbol}${balance.toFixed(2)}`;
-            document.getElementById('totalIncome').textContent = `${symbol}${totalIncome.toFixed(2)}`;
-            document.getElementById('totalExpenses').textContent = `${symbol}${totalExpenses.toFixed(2)}`;
-            document.getElementById('totalInvestments').textContent = `${symbol}${totalInvest.toFixed(2)}`;
-
-            renderInvestments();
-            renderGrants();
-            renderTransactions(state.currentFilter);
-        }
-
-        // ============================================================
-        // INVESTMENTS RENDER
-        // ============================================================
-        function renderInvestments() {
-            const grid = document.getElementById('investmentGrid');
-            const summary = document.getElementById('investSummary');
-            const symbol = state.settings.currency === 'NGN' ? '₦' :
-                state.settings.currency === 'EUR' ? '€' :
-                state.settings.currency === 'GBP' ? '£' : '$';
-
-            if (state.investments.length === 0) {
-                grid.innerHTML =
-                    `<div style="grid-column:1/-1;text-align:center;padding:30px 0;color:var(--text-muted);">
-                                <i class="fas fa-chart-line" style="font-size:2rem;display:block;margin-bottom:8px;"></i>
-                                No investments yet. Start growing your wealth today!
-                            </div>`;
-            } else {
-                grid.innerHTML = state.investments.map(inv => {
-                    const statusClass = inv.status === 'active' ? 'active' : inv.status === 'pending' ? 'pending' :
-                        'completed';
-                    return `
-                                <div class="investment-card">
-                                    <div class="plan-name">${inv.plan}</div>
-                                    <div class="plan-return">${symbol}${inv.amount.toFixed(2)}</div>
-                                    <div class="plan-details">${inv.roi}% ROI · ${inv.status}</div>
-                                    <div class="plan-details">Returns: ${symbol}${inv.returns.toFixed(2)}</div>
-                                    <span class="plan-status ${statusClass}">${inv.status}</span>
-                                </div>
-                            `;
-                }).join('');
-            }
-
-            const totalInvested = state.investments.reduce((s, i) => s + i.amount, 0);
-            const totalReturns = state.investments.reduce((s, i) => s + i.returns, 0);
-            summary.innerHTML = `
-                        <div class="summary-item">
-                            <div class="label">Total Invested</div>
-                            <div class="value">${symbol}${totalInvested.toFixed(2)}</div>
-                        </div>
-                        <div class="summary-item">
-                            <div class="label">Total Returns</div>
-                            <div class="value" style="color:var(--success);">${symbol}${totalReturns.toFixed(2)}</div>
-                        </div>
-                        <div class="summary-item">
-                            <div class="label">Active Investments</div>
-                            <div class="value">${state.investments.filter(i => i.status === 'active').length}</div>
-                        </div>
-                        <div class="summary-item">
-                            <div class="label">ROI Average</div>
-                            <div class="value" style="color:var(--success);">
-                                ${state.investments.length > 0 ? (state.investments.reduce((s,i) => s + i.roi, 0) / state.investments.length).toFixed(1) : 0}%
-                            </div>
-                        </div>
-                    `;
-        }
-
-        // ============================================================
-        // GRANTS RENDER
-        // ============================================================
-        function renderGrants() {
-            const grid = document.getElementById('grantsGrid');
-            const symbol = state.settings.currency === 'NGN' ? '₦' :
-                state.settings.currency === 'EUR' ? '€' :
-                state.settings.currency === 'GBP' ? '£' : '$';
-
-            if (state.grants.length === 0) {
-                grid.innerHTML =
-                    `<div style="grid-column:1/-1;text-align:center;padding:30px 0;color:var(--text-muted);">
-                                <i class="fas fa-hand-holding-heart" style="font-size:2rem;display:block;margin-bottom:8px;"></i>
-                                No grant applications yet. Apply for funding today!
-                            </div>`;
-            } else {
-                grid.innerHTML = state.grants.map(g => {
-                    const statusClass = g.status === 'approved' ? 'approved' : g.status === 'pending' ? 'pending' :
-                        g.status === 'rejected' ? 'rejected' : 'review';
-                    return `
-                                <div class="grant-card">
-                                    <div class="grant-name">${g.program}</div>
-                                    <div class="grant-amount">${symbol}${g.amount.toFixed(2)}</div>
-                                    <div class="grant-desc">${g.purpose}</div>
-                                    <div class="grant-desc" style="font-size:0.7rem;">Applied: ${new Date(g.date).toLocaleDateString()}</div>
-                                    <span class="grant-status ${statusClass}">${g.status}</span>
-                                </div>
-                            `;
-                }).join('');
-            }
-        }
-
-        // ============================================================
-        // TRANSACTIONS RENDER
-        // ============================================================
-        function renderTransactions(filter = 'all') {
-            const list = document.getElementById('transactionList');
-            let filtered = state.transactions;
-
-            if (filter === 'income') filtered = state.transactions.filter(t => t.type === 'income');
-            else if (filter === 'expense') filtered = state.transactions.filter(t => t.type === 'expense');
-            else if (filter === 'transfer') filtered = state.transactions.filter(t => t.type === 'transfer');
-            else if (filter === 'investment') filtered = state.transactions.filter(t => t.type === 'investment');
-
-            filtered = [...filtered].sort((a, b) => new Date(b.date) - new Date(a.date));
-
-            if (filtered.length === 0) {
-                list.innerHTML =
-                    `<div style="text-align:center;padding:30px 0;color:var(--text-muted);"><i class="fas fa-inbox" style="font-size:1.8rem;display:block;margin-bottom:6px;"></i>No transactions found</div>`;
-                return;
-            }
-
-            const symbol = state.settings.currency === 'NGN' ? '₦' :
-                state.settings.currency === 'EUR' ? '€' :
-                state.settings.currency === 'GBP' ? '£' : '$';
-
-            list.innerHTML = filtered.map(tx => {
-                const sign = tx.type === 'income' ? '+' : '-';
-                const amountClass = tx.type === 'income' ? 'positive' : 'negative';
-                const date = new Date(tx.date);
-                const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                const timeStr = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-                const statusClass = tx.status === 'completed' ? 'completed' : 'pending';
-                return `
-                            <div class="tx-item">
-                                <div class="tx-icon">${tx.icon || '💳'}</div>
-                                <div class="tx-info">
-                                    <div class="name">${tx.name}</div>
-                                    <div class="desc">${tx.description || ''} · ${dateStr} ${timeStr}</div>
-                                </div>
-                                <span class="tx-status ${statusClass}">${tx.status}</span>
-                                <div class="tx-amount ${amountClass}">${sign}${symbol}${Math.abs(tx.amount).toFixed(2)}</div>
-                            </div>
-                        `;
-            }).join('');
-
-            document.querySelectorAll('.tx-filters button').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.filter === filter);
-            });
-            state.currentFilter = filter;
-        }
-
-        // ============================================================
-        // FILTER BUTTONS
-        // ============================================================
-        document.querySelectorAll('.tx-filters button').forEach(btn => {
-            btn.addEventListener('click', function() {
-                renderTransactions(this.dataset.filter);
-            });
-        });
-
-        // ============================================================
-        // SIDEBAR NAV
-        // ============================================================
-        document.querySelectorAll('.sidebar-nav a[data-tab]').forEach(link => {
-            link.addEventListener('click', function(e) {
-                document.querySelectorAll('.sidebar-nav a[data-tab]').forEach(a => a.classList.remove('active'));
-                this.classList.add('active');
-                const tab = this.dataset.tab;
-                if (tab === 'overview') {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                } else if (tab === 'transactions') {
-                    document.querySelector('.tx-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
-                } else if (tab === 'investments') {
-                    document.getElementById('investmentSection').scrollIntoView({ behavior: 'smooth',
-                    block: 'start' });
-                } else if (tab === 'grants') {
-                    document.getElementById('grantsSection').scrollIntoView({ behavior: 'smooth',
-                    block: 'start' });
-                }
-            });
-        });
-
-        // ============================================================
-        // MODALS
-        // ============================================================
-        function openModal(id) {
-            document.getElementById(id).classList.add('open');
-            if (id === 'settingsModal') {
-                document.getElementById('settingsName').value = state.settings.name || '';
-                document.getElementById('settingsEmail').value = state.settings.email || '';
-                document.getElementById('settingsPhone').value = state.settings.phone || '';
-                document.getElementById('settingsCurrency').value = state.settings.currency || 'USD';
-            }
-            if (id === 'historyModal') renderHistoryModal();
-            if (id === 'grantModal') {
-                document.getElementById('grantName').value = state.user?.name || '';
-                document.getElementById('grantEmail').value = state.user?.email || '';
-            }
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).classList.remove('open');
-        }
-
-        document.querySelectorAll('.modal-overlay').forEach(overlay => {
-            overlay.addEventListener('click', function(e) {
-                if (e.target === this) this.classList.remove('open');
-            });
-        });
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
-            }
-        });
-
-        // ============================================================
-        // SEND MONEY
-        // ============================================================
-        function handleSend(e) {
-            e.preventDefault();
-            const recipient = document.getElementById('sendRecipient').value.trim();
-            const amount = parseFloat(document.getElementById('sendAmount').value);
-            const note = document.getElementById('sendNote').value.trim() || 'Transfer';
-
-            if (!recipient || !amount || amount <= 0) {
-                showToast('Please enter a valid recipient and amount.', 'error', 'Send Failed');
-                return;
-            }
-            if (amount > state.balance) {
-                showToast('Insufficient balance.', 'error', 'Send Failed');
-                return;
-            }
-
-            state.transactions.push({
-                id: Date.now(),
-                type: 'transfer',
-                name: `To ${recipient}`,
-                description: note,
-                amount: amount,
-                date: new Date().toISOString(),
-                status: 'completed',
-                icon: '📤'
-            });
-            state.balance -= amount;
-            const symbol = state.settings.currency === 'NGN' ? '₦' :
-                state.settings.currency === 'EUR' ? '€' :
-                state.settings.currency === 'GBP' ? '£' : '$';
-            showToast(`${symbol}${amount.toFixed(2)} sent to ${recipient}`, 'success', 'Transfer Complete');
-            closeModal('sendModal');
-            document.getElementById('sendForm').reset();
-            renderDashboard();
-        }
-
-        // ============================================================
-        // REQUEST MONEY
-        // ============================================================
-        function handleRequest(e) {
-            e.preventDefault();
-            const from = document.getElementById('requestFrom').value.trim();
-            const amount = parseFloat(document.getElementById('requestAmount').value);
-            const reason = document.getElementById('requestReason').value.trim() || 'Request';
-
-            if (!from || !amount || amount <= 0) {
-                showToast('Please enter a valid person and amount.', 'error', 'Request Failed');
-                return;
-            }
-            state.transactions.push({
-                id: Date.now(),
-                type: 'income',
-                name: `Request from ${from}`,
-                description: reason,
-                amount: amount,
-                date: new Date().toISOString(),
-                status: 'pending',
-                icon: '📥'
-            });
-            const symbol = state.settings.currency === 'NGN' ? '₦' :
-                state.settings.currency === 'EUR' ? '€' :
-                state.settings.currency === 'GBP' ? '£' : '$';
-            showToast(`Request for ${symbol}${amount.toFixed(2)} sent to ${from}`, 'success', 'Request Sent');
-            closeModal('requestModal');
-            document.getElementById('requestForm').reset();
-            renderDashboard();
-        }
-
-        // ============================================================
-        // INVESTMENT
-        // ============================================================
-        function handleInvest(e) {
-            e.preventDefault();
-            const plan = document.getElementById('investPlan').value;
-            const amount = parseFloat(document.getElementById('investAmount').value);
-            const goal = document.getElementById('investGoal').value.trim() || 'Wealth growth';
-
-            if (!amount || amount < 100) {
-                showToast('Minimum investment is $100.', 'error', 'Investment Failed');
-                return;
-            }
-            if (amount > state.balance) {
-                showToast('Insufficient balance for this investment.', 'error', 'Investment Failed');
-                return;
-            }
-
-            const roiMap = { Starter: 5, Growth: 8, Premium: 12, Elite: 18 };
-            const daysMap = { Starter: 30, Growth: 60, Premium: 90, Elite: 180 };
-            const roi = roiMap[plan] || 5;
-            const days = daysMap[plan] || 30;
-
-            const returns = (amount * roi) / 100;
-
-            state.investments.push({
-                id: Date.now(),
-                plan: plan,
-                amount: amount,
-                roi: roi,
-                startDate: new Date().toISOString().split('T')[0],
-                endDate: new Date(Date.now() + days * 86400000).toISOString().split('T')[0],
-                status: 'active',
-                returns: returns
-            });
-
-            state.transactions.push({
-                id: Date.now(),
-                type: 'investment',
-                name: `${plan} Investment`,
-                description: `${roi}% ROI · ${days} days · ${goal}`,
-                amount: amount,
-                date: new Date().toISOString(),
-                status: 'completed',
-                icon: '📈'
-            });
-
-            state.balance -= amount;
-
-            const symbol = state.settings.currency === 'NGN' ? '₦' :
-                state.settings.currency === 'EUR' ? '€' :
-                state.settings.currency === 'GBP' ? '£' : '$';
-
-            showToast(`Invested ${symbol}${amount.toFixed(2)} in ${plan} plan!`, 'success', 'Investment Successful');
-            closeModal('investModal');
-            document.getElementById('investForm').reset();
-            renderDashboard();
-        }
-
-        // ============================================================
-        // GRANT APPLICATION
-        // ============================================================
-        function handleGrantApply(e) {
-            e.preventDefault();
-            const program = document.getElementById('grantProgram').value;
-            const name = document.getElementById('grantName').value.trim();
-            const email = document.getElementById('grantEmail').value.trim();
-            const amount = parseFloat(document.getElementById('grantAmount').value);
-            const purpose = document.getElementById('grantPurpose').value.trim();
-            const docs = document.getElementById('grantDocs').value.trim();
-
-            if (!name || !email || !amount || !purpose) {
-                showToast('Please fill in all required fields.', 'error', 'Application Failed');
-                return;
-            }
-            if (amount < 100) {
-                showToast('Minimum grant request is $100.', 'error', 'Application Failed');
-                return;
-            }
-
-            state.grants.push({
-                id: Date.now(),
-                program: program,
-                amount: amount,
-                purpose: purpose,
-                status: 'review',
-                date: new Date().toISOString().split('T')[0]
-            });
-
-            state.transactions.push({
-                id: Date.now(),
-                type: 'income',
-                name: `Grant Application: ${program}`,
-                description: purpose.substring(0, 50) + (purpose.length > 50 ? '...' : ''),
-                amount: 0,
-                date: new Date().toISOString(),
-                status: 'pending',
-                icon: '🎯'
-            });
-
-            const symbol = state.settings.currency === 'NGN' ? '₦' :
-                state.settings.currency === 'EUR' ? '€' :
-                state.settings.currency === 'GBP' ? '£' : '$';
-
-            showToast(`Grant application for ${symbol}${amount.toFixed(2)} submitted!`, 'success',
-            'Application Submitted');
-            closeModal('grantModal');
-            document.getElementById('grantForm').reset();
-            renderDashboard();
-        }
-
-        // ============================================================
-        // HISTORY MODAL
-        // ============================================================
-        function renderHistoryModal() {
-            const container = document.getElementById('historyList');
-            const sorted = [...state.transactions].sort((a, b) => new Date(b.date) - new Date(a.date));
-
-            if (sorted.length === 0) {
-                container.innerHTML =
-                    `<div style="text-align:center;padding:30px 0;color:var(--text-muted);">No transactions yet.</div>`;
-                return;
-            }
-
-            const symbol = state.settings.currency === 'NGN' ? '₦' :
-                state.settings.currency === 'EUR' ? '€' :
-                state.settings.currency === 'GBP' ? '£' : '$';
-
-            container.innerHTML = sorted.map(tx => {
-                const sign = tx.type === 'income' ? '+' : '-';
-                const amountClass = tx.type === 'income' ? 'positive' : 'negative';
-                const date = new Date(tx.date).toLocaleDateString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-                return `
-                            <div class="tx-item" style="padding:10px 0;">
-                                <div class="tx-icon">${tx.icon || '💳'}</div>
-                                <div class="tx-info">
-                                    <div class="name">${tx.name}</div>
-                                    <div class="desc">${tx.description || ''} · ${date}</div>
-                                </div>
-                                ${tx.amount > 0 ? `<div class="tx-amount ${amountClass}">${sign}${symbol}${Math.abs(tx.amount).toFixed(2)}</div>` : ''}
-                            </div>
-                        `;
-            }).join('');
-        }
-
-        // ============================================================
-        // SETTINGS
-        // ============================================================
-        function handleSettings(e) {
-            e.preventDefault();
-            const name = document.getElementById('settingsName').value.trim();
-            const email = document.getElementById('settingsEmail').value.trim();
-            const phone = document.getElementById('settingsPhone').value.trim();
-            const currency = document.getElementById('settingsCurrency').value;
-
-            if (name) state.settings.name = name;
-            if (email) state.settings.email = email;
-            if (phone) state.settings.phone = phone;
-            state.settings.currency = currency;
-
-            if (state.user) {
-                state.user.name = state.settings.name;
-                state.user.email = state.settings.email;
-                state.user.phone = state.settings.phone;
-            }
-
-            showToast('Settings updated successfully!', 'success', 'Settings Saved');
-            closeModal('settingsModal');
-            renderDashboard();
-        }
-
-        // ============================================================
-        // MOBILE NAV TOGGLE
-        // ============================================================
-        document.getElementById('navToggle').addEventListener('click', function() {
-            this.classList.toggle('active');
-            document.getElementById('navLinks').classList.toggle('open');
-        });
-
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('navLinks').classList.remove('open');
-                document.getElementById('navToggle').classList.remove('active');
-            });
-        });
-
-        // ============================================================
-        // NAVBAR SCROLL
-        // ============================================================
-        window.addEventListener('scroll', function() {
-            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
-        });
-
-        // ============================================================
-        // INIT
-        // ============================================================
-        navigateTo('landing');
-
-        console.log('🏦 PioneerTrust Banking Platform loaded successfully!');
-        console.log('📊 Demo: demo@pioneertrust.com / password123');
-        console.log('📈 Investment & Grant features added!');
-    </script>
+        const response = await emailjs.send(
+          EMAILJS_SERVICE_ID,
+          TEMPLATES.LOGIN_NOTIFICATION,
+          params
+        );
+
+        console.log('✅ Login notification sent:', response);
+        return true;
+      } catch (error) {
+        console.error('❌ Login notification failed:', error);
+        return false;
+      }
+    }
+
+    // ===== USER DATA =====
+    const registeredUsers = [
+      {
+        fullName: "Brown Robert Sanford",
+        email: "brown@gmail.com",
+        phone: "+1 234 567 890",
+        dob: "1990-01-01",
+        password: "Pioneer_09",
+        balance: 50000,
+        accounts: [
+          { name: "Allsouth FCU", type: "CHECKING ACCOUNT 9804", pending: "$20,000" },
+          { name: "Allsouth FCU", type: "CHECKING ACCOUNT 9812", pending: "$30,000" },
+          { name: "Allsouth FCU", type: "CHECKING ACCOUNT MEMBERSHIP SAVINGS 9797", pending: "$50,000" },
+          { name: "Allsouth FCU", type: "CHECKING ACCOUNT PERSONAL INSTALLMENT", pending: "$5,000" },
+          { name: "Chase Bank", type: "CHASE CHECKING ACCOUNT", pending: "$45,000" }
+        ],
+        transactions: [
+          { merchant: "Deposit", date: "2026-09-01", amount: 50000, type: "credit", status: "Completed" },
+          { merchant: "Transfer to Savings", date: "2026-09-02", amount: -5000, type: "debit", status: "Completed" },
+          { merchant: "Bill Payment", date: "2026-09-03", amount: -200, type: "debit", status: "Pending" }
+        ]
+      }
+    ];
+
+    let currentUser = null;
+    let isLoggedIn = false;
+
+    // ===== UI HELPERS =====
+    function showToast(msg, type = "success") {
+      const old = document.querySelector('.toast');
+      if (old) old.remove();
+      const el = document.createElement('div');
+      el.className = `toast ${type === 'error' ? 'border-red-500' : 'border-primary'}`;
+      el.innerHTML = `<i class="fas ${type === 'error' ? 'fa-exclamation-circle' : 'fa-check-circle'} mr-2"></i> ${msg}`;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 4000);
+    }
+
+    function showModal(html) {
+      const old = document.getElementById('customModal');
+      if (old) old.remove();
+      const div = document.createElement('div');
+      div.id = 'customModal';
+      div.className = 'modal';
+      div.innerHTML = `<div class="modal-content">${html}</div>`;
+      document.body.appendChild(div);
+      div.addEventListener('click', (e) => { if (e.target === div) div.remove(); });
+    }
+
+    function hideModal() {
+      const m = document.getElementById('customModal');
+      if (m) m.remove();
+    }
+
+    // ===== NAVIGATION =====
+    function goBackToLanding() {
+      document.getElementById('loginPage').classList.add('hidden');
+      document.getElementById('registerPage').classList.add('hidden');
+      document.getElementById('dashboardPage').classList.add('hidden');
+      document.getElementById('landingPage').classList.remove('hidden');
+    }
+
+    function showLogin() {
+      document.getElementById('landingPage').classList.add('hidden');
+      document.getElementById('registerPage').classList.add('hidden');
+      document.getElementById('dashboardPage').classList.add('hidden');
+      document.getElementById('loginPage').classList.remove('hidden');
+    }
+
+    function showRegister() {
+      document.getElementById('landingPage').classList.add('hidden');
+      document.getElementById('loginPage').classList.add('hidden');
+      document.getElementById('dashboardPage').classList.add('hidden');
+      document.getElementById('registerPage').classList.remove('hidden');
+    }
+
+    function showDashboard() {
+      document.getElementById('landingPage').classList.add('hidden');
+      document.getElementById('loginPage').classList.add('hidden');
+      document.getElementById('registerPage').classList.add('hidden');
+      document.getElementById('dashboardPage').classList.remove('hidden');
+      showSection('dashboard');
+    }
+
+    function logout() {
+      isLoggedIn = false;
+      currentUser = null;
+      document.getElementById('dashboardPage').classList.add('hidden');
+      document.getElementById('landingPage').classList.remove('hidden');
+      document.querySelectorAll('.section-content').forEach(el => el.classList.add('hidden'));
+      showToast("Logged out successfully");
+    }
+
+    // ===== DASHBOARD SECTIONS =====
+    const sections = ['dashboard','accounts','transfers','transactions','investments','grants','loans','cards','settings'];
+
+    function showSection(section) {
+      sections.forEach(s => {
+        document.getElementById('section-'+s).classList.add('hidden');
+      });
+      document.getElementById('section-'+section).classList.remove('hidden');
+      document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll(`.sidebar-link[data-section="${section}"]`).forEach(el => el.classList.add('active'));
+
+      if (section === 'dashboard') {
+        renderDashboard();
+      }
+      if (section === 'accounts') renderFullAccounts();
+      const panel = document.getElementById('mobileSidebarPanel');
+      const overlay = document.getElementById('mobileSidebar');
+      panel.classList.remove('translate-x-0');
+      overlay.classList.add('hidden');
+    }
+
+    // ===== RENDER DASHBOARD =====
+    function renderDashboard() {
+      if (!currentUser) return;
+      const user = currentUser;
+      document.getElementById('dashboardGreetingName').textContent = user.fullName;
+      document.getElementById('dashboardUserName').textContent = user.fullName;
+      document.getElementById('cardHolderName').textContent = user.fullName;
+
+      const container = document.getElementById('accountsList');
+      if (user.accounts && user.accounts.length) {
+        container.innerHTML = user.accounts.map((acc, i) => `
+          <div class="bg-white p-4 rounded-2xl shadow-soft border-l-4 border-primary flex justify-between items-center hover:shadow-md transition">
+            <div>
+              <div class="font-bold text-sm">${acc.name}</div>
+              <div class="text-xs text-gray-500">${acc.type}</div>
+              <div class="text-primary font-bold text-lg">${acc.pending}</div>
+            </div>
+            <div class="text-xs text-gray-400">Pending</div>
+          </div>
+        `).join('');
+      } else {
+        container.innerHTML = `<p class="text-gray-500">No accounts found.</p>`;
+      }
+    }
+
+    function renderFullAccounts() {
+      const container = document.getElementById('accountsListFull');
+      if (!currentUser || !currentUser.accounts) {
+        container.innerHTML = `<p class="text-gray-500">No accounts.</p>`;
+        return;
+      }
+      container.innerHTML = currentUser.accounts.map((acc, i) => `
+        <div class="bg-white p-5 rounded-2xl shadow-soft border-l-4 border-primary flex justify-between items-center hover:shadow-md transition">
+          <div>
+            <div class="font-bold text-lg">${acc.name}</div>
+            <div class="text-sm text-gray-500">${acc.type}</div>
+            <div class="text-primary font-bold text-xl">${acc.pending}</div>
+          </div>
+          <button onclick="deleteAccount(${i})" class="text-red-400 hover:text-red-600 transition"><i class="fas fa-trash"></i></button>
+        </div>
+      `).join('');
+    }
+
+    function createAccount() {
+      if (!currentUser) return;
+      const name = prompt('Account name') || 'New Account';
+      const type = prompt('Account type') || 'CHECKING ACCOUNT';
+      const pending = prompt('Pending amount (e.g. $5,000)') || '$0';
+      currentUser.accounts.push({ name, type, pending });
+      renderFullAccounts();
+      renderDashboard();
+      showToast('Account created');
+    }
+
+    function deleteAccount(idx) {
+      if (!currentUser) return;
+      if (confirm('Delete this account?')) {
+        currentUser.accounts.splice(idx, 1);
+        renderFullAccounts();
+        renderDashboard();
+        showToast('Account deleted');
+      }
+    }
+
+    // ===== TOGGLE MOBILE SIDEBAR =====
+    function toggleMobileSidebar() {
+      const panel = document.getElementById('mobileSidebarPanel');
+      const overlay = document.getElementById('mobileSidebar');
+      if (panel.classList.contains('translate-x-0')) {
+        panel.classList.remove('translate-x-0');
+        overlay.classList.add('hidden');
+      } else {
+        panel.classList.add('translate-x-0');
+        overlay.classList.remove('hidden');
+      }
+    }
+
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle('dark');
+      document.querySelectorAll('#darkToggleSettings').forEach(cb => cb.checked = document.documentElement.classList.contains('dark'));
+    }
+
+    // ===== REGISTER FUNCTIONALITY =====
+    document.getElementById('createAccountBtn')?.addEventListener('click', async function() {
+      const fullName = document.getElementById('regFullName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const phone = document.getElementById('regPhone').value.trim();
+      const dob = document.getElementById('regDob').value;
+      const password = document.getElementById('regPassword').value;
+      const confirm = document.getElementById('regConfirm').value;
+      const terms = document.getElementById('termsCheck').checked;
+
+      if (!fullName || !email || !phone || !dob || !password || !confirm) {
+        showToast('Please fill all fields', 'error');
+        return;
+      }
+      if (password !== confirm) {
+        showToast('Passwords do not match', 'error');
+        return;
+      }
+      if (password.length < 6) {
+        showToast('Password must be at least 6 characters', 'error');
+        return;
+      }
+      if (!terms) {
+        showToast('Please accept the Terms & Conditions', 'error');
+        return;
+      }
+      if (registeredUsers.some(u => u.email === email)) {
+        showToast('Email already registered. Please login.', 'error');
+        return;
+      }
+
+      const newUser = {
+        fullName,
+        email,
+        phone,
+        dob,
+        password,
+        balance: 0,
+        accounts: [],
+        transactions: []
+      };
+      registeredUsers.push(newUser);
+
+      currentUser = newUser;
+      isLoggedIn = true;
+      
+      // Send welcome notification
+      await sendLoginNotification(newUser);
+      
+      showDashboard();
+      renderDashboard();
+      showToast('Account created successfully! Welcome to PioneerTrust.');
+    });
+
+    // ===== LOGIN FUNCTIONALITY =====
+    document.getElementById('signInBtn')?.addEventListener('click', async function() {
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+
+      if (!email || !password) {
+        showToast('Please enter email and password', 'error');
+        return;
+      }
+
+      const user = registeredUsers.find(u => u.email === email && u.password === password);
+      if (!user) {
+        showToast('Invalid email or password', 'error');
+        return;
+      }
+
+      // Send login notification
+      await sendLoginNotification(user);
+
+      currentUser = user;
+      isLoggedIn = true;
+      
+      showDashboard();
+      renderDashboard();
+      showToast('Login successful! Welcome back.');
+    });
+
+    // ===== PASSWORD STRENGTH =====
+    document.getElementById('regPassword')?.addEventListener('input', function() {
+      const val = this.value;
+      const bar = document.getElementById('strengthBar');
+      let width = 0;
+      if (val.length > 0) width = 30;
+      if (val.length > 4) width = 60;
+      if (val.length > 8) width = 100;
+      bar.style.width = width + '%';
+      if (width <= 30) bar.className = "h-1 rounded bg-red-500";
+      else if (width <= 60) bar.className = "h-1 rounded bg-yellow-500";
+      else bar.className = "h-1 rounded bg-green-500";
+    });
+
+    // ===== TOGGLE PASSWORD VISIBILITY =====
+    document.getElementById('toggleLoginPwd')?.addEventListener('click', function() {
+      const pwd = document.getElementById('loginPassword');
+      pwd.type = pwd.type === 'password' ? 'text' : 'password';
+      this.classList.toggle('fa-eye');
+      this.classList.toggle('fa-eye-slash');
+    });
+
+    // ===== FORGOT PASSWORD =====
+    document.getElementById('forgotPwdLink')?.addEventListener('click', function(e) {
+      e.preventDefault();
+      showModal(`
+        <h3 class="text-xl font-bold mb-4">Reset Password</h3>
+        <p class="text-gray-600 text-sm mb-4">Contact support at <a href="mailto:s.g82317245@gmail.com" class="text-primary">s.g82317245@gmail.com</a> to reset your password.</p>
+        <button onclick="hideModal()" class="btn-primary w-full py-2 rounded-lg">Close</button>
+      `);
+    });
+
+    // ===== MOBILE MENU TOGGLE =====
+    document.getElementById('mobileMenuToggle')?.addEventListener('click', function() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('hidden');
+    });
+
+    // ===== INIT =====
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('landingPage').classList.remove('hidden');
+      document.getElementById('loginEmail').value = '';
+      document.getElementById('loginPassword').value = '';
+      document.getElementById('regFullName').value = '';
+      document.getElementById('regEmail').value = '';
+
+      // Initialize EmailJS
+      initEmailJS();
+      
+      console.log('🏦 PioneerTrust App Loaded');
+      console.log('📧 Login notifications will be sent to brown@gmail.com');
+    });
+
+    // ===== MAKE FUNCTIONS GLOBAL =====
+    window.goBackToLanding = goBackToLanding;
+    window.showLogin = showLogin;
+    window.showRegister = showRegister;
+    window.logout = logout;
+    window.showSection = showSection;
+    window.toggleMobileSidebar = toggleMobileSidebar;
+    window.toggleDarkMode = toggleDarkMode;
+    window.createAccount = createAccount;
+    window.deleteAccount = deleteAccount;
+    window.hideModal = hideModal;
+  </script>
 </body>
 </html>
