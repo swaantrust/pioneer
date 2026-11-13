@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YOU MESS UP · landing page</title>
+  <style>
+    /* Global reset & base styling */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #0b0b0f 0%, #1a1a24 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      padding: 1.5rem;
+    }
+
+    /* Main landing card – clean and minimal */
+    .landing {
+      width: 100%;
+      max-width: 860px;
+      background: rgba(18, 18, 26, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 48px;
+      box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+      padding: 4rem 2rem;
+      transition: all 0.25s ease;
+    }
+
+    /* The star: bold, centered, uncompromising */
+    .mess-up {
+      display: block;
+      text-align: center;
+      width: 100%;
+      font-size: clamp(3.5rem, 18vw, 8rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 0 2px rgba(255, 255, 255, 0.02);
+      word-break: break-word;
+      margin-bottom: 2.25rem;
+      animation: subtlePulse 6s infinite alternate ease-in-out;
+    }
+
+    /* Optional micro-interaction for extra boldness */
+    @keyframes subtlePulse {
+      0% {
+        text-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 0 2px rgba(255, 215, 100, 0.02);
+      }
+      100% {
+        text-shadow: 0 8px 28px rgba(255, 215, 100, 0.18), 0 0 0 2px rgba(255, 255, 255, 0.04);
+      }
+    }
+
+    /* Divider – minimal, clean */
+    .divider {
+      width: 80px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      margin: 0 auto 2.5rem auto;
+    }
+
+    /* Supporting text – calm, lower contrast */
+    .subtext {
+      text-align: center;
+      max-width: 540px;
+      margin: 0 auto;
+      color: #a9a9b8;
+      font-weight: 400;
+      font-size: 1.2rem;
+      line-height: 1.6;
+      letter-spacing: 0.01em;
+    }
+
+    .subtext strong {
+      color: #d6d6e0;
+      font-weight: 600;
+    }
+
+    /* Accent / decorative line */
+    .accent-line {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 3rem;
+    }
+
+    .accent-line span {
+      width: 10px;
+      height: 10px;
+      background: #ffffff;
+      border-radius: 50%;
+      opacity: 0.15;
+    }
+
+    .accent-line span:first-child {
+      opacity: 0.4;
+      background: #ffd966;
+    }
+
+    /* Small responsive adjustments */
+    @media (max-width: 600px) {
+      .landing {
+        padding: 3rem 1.25rem;
+        border-radius: 32px;
+      }
+
+      .mess-up {
+        font-size: clamp(2.8rem, 16vw, 5.5rem);
+        margin-bottom: 1.75rem;
+      }
+
+      .subtext {
+        font-size: 1rem;
+        padding: 0 0.5rem;
+      }
+
+      .divider {
+        margin-bottom: 1.75rem;
+      }
+    }
+
+    /* High-contrast fallback */
+    @media (prefers-reduced-motion: reduce) {
+      .mess-up {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="landing">
+    <!-- The bold, centered statement -->
+    <h1 class="mess-up">YOU MESS UP</h1>
+
+    <!-- subtle separator -->
+    <div class="divider" aria-hidden="true"></div>
+
+    <!-- supporting copy (optional but completes the landing page) -->
+   
+
+    <!-- decorative dots – subtle visual anchor -->
+    <div class="accent-line" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </main>
+</body>
+</html>
